@@ -70,8 +70,10 @@ public class UserController {
 		return new ModelAndView("redirect:" + REGISTER_URL);
     }
 	
-	@RequestMapping(value="/cat",method=RequestMethod.GET)
-	public String viewPageByCategory(){
+	@RequestMapping(value="/cat/{ParentID}",method=RequestMethod.GET)
+	public String viewPageByCategory(@PathVariable("ParentID") String ParentID, ModelMap model,@RequestParam("p") String menuName){
+		model.put("ParentID", ParentID);
+		model.put("PAGE_TITLE", menuName);
 		return "user/view-by-category";
 	}
 	

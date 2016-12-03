@@ -27,6 +27,20 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 	
 	$scope.getAllCategoryNewFun();
 	
+	$scope.getAllCategoryByLevel = function(level){
+		$http({
+			url:API_ACCESS_CONTROLLER_URL + '/getAllCatByLevel?level='+level,
+			method:'GET'			
+		}).then(function(response){
+			$scope.allCategoryByLevel=response.data.DATA;
+			console.log("all cat by level");
+			console.log($scope.allCategoryByLevel);
+			
+		}, function(response){
+		
+		});
+	}
+	
 	
 	
 	$scope.getCategoryCount = function() {
@@ -155,6 +169,26 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 	}
 
 	
+	$scope.subCategoryLevel = [
+	                           
+			     		      {
+			     		    	 "LEVEL_NUM"	: 1,
+				     		     "LEVEL_DES"	: "Level One"
+			     		      },
+			     		      {
+			     		    	 "LEVEL_NUM"	: 2,
+				     		     "LEVEL_DES"	: "Level Two"
+			     		      },
+			     		      {
+			     		    	 "LEVEL_NUM"	: 3,
+				     		     "LEVEL_DES"	: "Level Three"
+			     		      },
+			     		      {
+			     		    	 "LEVEL_NUM"	: 4,
+				     		     "LEVEL_DES"	: "Level Four"
+			     		      }	
+		     		    ];
+	
 	
 	
 	// UPLOAD CATEGORY AND SUB-CATEGORY BLOCK
@@ -174,7 +208,9 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 		frmData.append("folderStatus", $scope.sta);	
 		frmData.append("catIcon", $scope.catIcon);
 		if($scope.showCatBox==true){
-			$scope.catLevel = 1;
+			//$scope.catLevel = 1;
+			$scope.catLevel = $scope.selectedLevel;
+			
 			$scope.catNumOrder = 0;
 		}else{
 			$scope.catLevel = 0;

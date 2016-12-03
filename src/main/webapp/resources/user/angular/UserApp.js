@@ -137,6 +137,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 			method:'GET'
 		}).then(function(response){
 			$scope.parentCategory=response.data.DATA;
+			console.log("parentcat");
+			console.log($scope.parentCategory);
 		}, function(response){
 
 		});	
@@ -421,6 +423,9 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 			params : $scope.filter
 		}).then(function(response){
 			$scope.documentByCatID=response.data.DATA;
+			console.log("doc by cat");
+			console.log($scope.documentByCatID);
+			
 		//	$scope.recordNotFound=true;
 			if($scope.currentTotalDoc == 0){
 				$scope.filter.page=1;				

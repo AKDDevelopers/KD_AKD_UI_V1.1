@@ -202,13 +202,21 @@ window.fileName="";
 							   <span><i class="fa fa-home" aria-hidden="true"></i>
 							   </span>ទំព័រដើម
 						  </a>
-					  </li>				  
-					  <li ng-repeat="mainCat in getAllCategoryAndSubcategory" ng-cloak>
+					  </li>	
+					  			  
+					   <li ng-repeat="mainCat in getAllCategoryAndSubcategory" ng-cloak>
 					  		<a class="menu" href="/view/{{mainCat.CAT_ID}}?p={{mainCat.CAT_NAME}}" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span><i class="{{mainCat.ICON}}" aria-hidden="true"></i>
 							   </span>{{mainCat.CAT_NAME}}
 						 	</a>
-					  </li>
+					  </li>  
+					  
+					   <!-- <li ng-repeat="mainCat in getAllCategoryAndSubcategory" ng-cloak>
+					  		<a class="menu" href="/cat/{{mainCat.CAT_ID}}?p={{mainCat.CAT_NAME}}" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
+							   <span><i class="{{mainCat.ICON}}" aria-hidden="true"></i>
+							   </span>{{mainCat.CAT_NAME}}
+						 	</a>
+					  </li> -->
 				</ul>
 			</div> 
 		</div>

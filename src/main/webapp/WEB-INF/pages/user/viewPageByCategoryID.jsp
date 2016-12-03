@@ -7,6 +7,12 @@
 
 <%@include file="include/link/link.jsp"%>
 
+	<!--  New Code -->
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/ionicons/ionicons.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/AdminLTE/css/AdminLTE.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/AdminLTE/css/skins/_all-skins.min.css">
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/user/css/userAccount.css">
+
 <style>
 .footer{
 	background-color: #374458;
@@ -55,10 +61,20 @@ a.thumbnail {
     box-shadow: none;
   }
   
+  .skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
+    margin-top: 10px;
+}
+.content-wrapper, .right-side {
+    background-color: transparent;
+}
+.main-sidebar{
+	min-height: 0%;
+}
+  
 </style>
 
 </head>
-<body ng-cloak ng-app="UserApp" ng-controller="UserCtrl" data-ng-init="getCategoryByParentID('${ParentID}')">
+<body ng-cloak ng-app="UserApp" ng-controller="UserCtrl" data-ng-init="getCategoryByParentID('${ParentID}')" class="hold-transition skin-blue sidebar-mini">
 	<jsp:include page="include/register.jsp"></jsp:include>
 	<jsp:include page="include/login.jsp"></jsp:include>
 	<jsp:include page="include/upload.jsp"></jsp:include>
@@ -74,21 +90,27 @@ a.thumbnail {
 		<div id="page-content-wrapper">
 			<div class="container" id="container-cate">
 				<section id="cates-view">
-					<div class="row section nav-left topspace-cates">					
+					<div class="row section nav-left topspace-cates#">					
 						<div class="row-nav-left-content" ng-cloak>
 							<div class="row">
 							   <div class="col-sm-3" id="left-side-nav" >
-							   	   <ul class="category-menu nav nav-pills nav-stacked">
+							   <%@include file="../layout/left-side-bar.jsp"%>	
+							   
+							   <div class="content-wrapper">
+								  <%@include file="include/user-page-layout/content-header.jsp"%>
+								</div>
+							   
+							   	   <!-- <ul class="category-menu nav nav-pills nav-stacked">
 							   	   		 <li class="bg-cate">
 							   	   		 	<span>
 							   	   		 		<i class="{{getCategoryByID.ICON}}"></i>
 					  	   					</span>
 					  	   					{{getCategoryByID.CAT_NAME}}
 					  	   				</li>
-					  	   				<li  class="cates-main " ng-repeat="parentCat in parentCategory" ng-click="getAllDocumentByCatID(parentCat.CAT_ID);getTotalDocByCatID(parentCat.TOTAL_DOC)"> <!--  ng-click="updateTotalDocByCatID(parentCat.CAT_ID)" -->
+					  	   				<li  class="cates-main " ng-repeat="parentCat in parentCategory" ng-click="getAllDocumentByCatID(parentCat.CAT_ID);getTotalDocByCatID(parentCat.TOTAL_DOC)">  ng-click="updateTotalDocByCatID(parentCat.CAT_ID)"
 					  	   					<a data-toggle="pill">{{parentCat.CAT_NAME}} ( <b>{{parentCat.TOTAL_DOC}}</b>​ )</a> 
 					  	   				</li>			  	   				
-							   	   </ul>
+							   	   </ul> -->
 							   </div>
 						  		<div class="col-sm-9" ng-if="parentCategory[0]">	
 									<div class="body-cates tab-content">							
@@ -122,5 +144,10 @@ a.thumbnail {
 	   
 	
 	 <%@include file="include/script/script.jsp"%>
+	 
+	 <!-- New code here -->
+	<script src="${pageContext.request.contextPath}/resources/plugins/fastclick/fastclick.min.js"></script> 
+	<script src="${pageContext.request.contextPath}/resources/plugins/AdminLTE/js/app.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/AdminLTE/js/demo.js"></script>
 </body>
 </html>

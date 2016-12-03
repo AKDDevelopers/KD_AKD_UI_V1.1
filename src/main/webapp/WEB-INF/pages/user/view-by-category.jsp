@@ -16,7 +16,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Category</title>
+ 	<title>${PAGE_TITLE}</title>
 	<%@include file="include/link/link.jsp"%>
 
 	<!--  New Code -->
@@ -25,7 +25,7 @@
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/plugins/AdminLTE/css/skins/_all-skins.min.css">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/user/css/userAccount.css">
 </head>
-<body ng-cloak ng-app="UserApp" ng-controller="UserCtrl"  class="hold-transition skin-blue sidebar-mini">  <!-- data-ng-init="getUserByID()" -->
+<body ng-cloak ng-app="UserApp" ng-controller="UserCtrl"  data-ng-init="getCategoryByParentID('${ParentID}')" class="hold-transition skin-blue sidebar-mini">  <!-- data-ng-init="getUserByID()" -->
 	<jsp:include page="include/register.jsp"></jsp:include>
 	<jsp:include page="include/login.jsp"></jsp:include>
 	<jsp:include page="include/upload.jsp"></jsp:include>		
