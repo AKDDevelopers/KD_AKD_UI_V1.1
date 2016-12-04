@@ -137,8 +137,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 			method:'GET'
 		}).then(function(response){
 			$scope.parentCategory=response.data.DATA;
-			console.log("parentcat");
-			console.log($scope.parentCategory);
+			console.log("parentcat[0]");
+			console.log($scope.parentCategory[0]);
 		}, function(response){
 
 		});	
@@ -180,6 +180,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 		});	
 	}*/
+	
 	
 	////////////////////	END CATEGORY BLOCK	/////////////////
 	
@@ -416,6 +417,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 	
 	$rootScope.currentTotalPage = 0;
 	$scope.getAllDocumentByCatID=function(CatID){
+
 		$rootScope.currentSubCategory=CatID;		//First It is close!!
 		$http({
 			url:API_ACCESS_CONTROLLER_URL + '/getDocumentByCatID?catID='+CatID,
@@ -426,6 +428,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 			console.log("doc by cat");
 			console.log($scope.documentByCatID);
 			
+			
+			
 		//	$scope.recordNotFound=true;
 			if($scope.currentTotalDoc == 0){
 				$scope.filter.page=1;				
@@ -434,21 +438,29 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 						
 			if(response.data.DATA==null && $scope.currentTotalDoc!=0){				
 				$scope.filter.page=1;
-				$scope.getAllDocumentByCatID(CatID);				
+				$scope.getAllDocumentByCatID(CatID);	// JUST DISABLE IT ON 05/12/2016 BUT NOT CHECK 100%. MEAN WE CAN OPEN IT.
+				
+				
 			}
 			else{
 				if(response.data.PAGING != null){
 					$rootScope.currentTotalPage = response.data.PAGING.TOTAL_PAGES;	
 					$scope.recordNotFound=false;	
+					
 				}else{	
 					$rootScope.currentTotalPage=Math.ceil($scope.currentTotalDoc/$scope.filter.limit);
-					$scope.recordNotFound=true;				
+					$scope.recordNotFound=true;	
+					
 				}				
-				$scope.setPagination_DOC_BY_CAT($rootScope.currentTotalPage);						
-			}
-		}, function(response){
+				$scope.setPagination_DOC_BY_CAT($rootScope.currentTotalPage);	
 
+			}
+			
+			
+		}, function(response){
 		});
+		
+		
 	}
 	
 	
