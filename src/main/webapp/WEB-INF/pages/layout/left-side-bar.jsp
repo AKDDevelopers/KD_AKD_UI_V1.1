@@ -50,6 +50,9 @@
     background: #00b050;
     border-left-color: #3c8dbc;
 }
+.skin-blue .treeview-menu>li>a {
+    padding: 12px 5px 12px 28px;
+}
 </style>
 
 
@@ -68,7 +71,7 @@
             <i class="{{sub1.ICON}}"></i> <span>{{sub1.CAT_NAME}}	</span>
             <span class="pull-right-container">
             
-              <i class="fa fa-angle-left pull-right"></i>
+              <i ng-if="sub1.TOTAL_SUB>0" class="fa fa-angle-left pull-right"></i>
               <span class="label label-primary pull-right">{{sub1.TOTAL_DOC}}</span>
             </span>
           </a>
@@ -77,20 +80,25 @@
             <li ng-repeat="sub2 in sub1.SUB_CATEGORIES" ng-init="sub2.ICON='fa fa-star'" ng-click="getAllDocumentByCatID(sub2.CAT_ID);getTotalDocByCatID(sub2.TOTAL_DOC)">
               <a href="#"><i class="{{sub2.ICON}}"></i> {{sub2.CAT_NAME}}
                 <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
+                  <i ng-if="sub2.TOTAL_SUB>0" class="fa fa-angle-left pull-right"></i>
+                  <span class="label label-primary pull-right">{{sub2.TOTAL_DOC}}</span>
                 </span>
               </a>
                          
               <ul class="treeview-menu">        
-                 <li ng-repeat="sub3 in sub2.SUB_CATEGORIES" ng-init="sub3.ICON='fa fa-heart'" ng-click="getAllDocumentByCatID(sub3.CAT_ID);getTotalDocByCatID(sub3.TOTAL_DOC)">
+                 <li ng-repeat="sub3 in sub2.SUB_CATEGORIES" ng-init="sub3.ICON='fa fa-heart'" ng-click="getAllDocumentByCatID(sub3.CAT_ID);getTotalDocByCatID(sub3.TOTAL_DOC);$event.stopPropagation()">
                   <a href="#"><i class="{{sub3.ICON}}"></i> {{sub3.CAT_NAME}}
                     <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
+                      <i ng-if="sub3.TOTAL_SUB>0" class="fa fa-angle-left pull-right"></i>
+                      <span class="label label-primary pull-right">{{sub3.TOTAL_DOC}}</span>
                     </span>
                   </a>
                   <ul class="treeview-menu">
-                    <li ng-repeat="sub4 in sub3.SUB_CATEGORIES" ng-init="sub4.ICON='fa fa-gear'" ng-click="getAllDocumentByCatID(sub4.CAT_ID);getTotalDocByCatID(sub4.TOTAL_DOC)">
-                    	<a href="#"><i class="{{sub4.ICON}}"></i> {{sub4.CAT_NAME}} </a>
+                    <li ng-repeat="sub4 in sub3.SUB_CATEGORIES" ng-init="sub4.ICON='fa fa-gear'" ng-click="getAllDocumentByCatID(sub4.CAT_ID);getTotalDocByCatID(sub4.TOTAL_DOC);$event.stopPropagation()">
+                    	<a href="#">
+                    		<i class="{{sub4.ICON}}"></i> {{sub4.CAT_NAME}} 
+                    		
+                    	</a>
                     </li>
                   </ul>
                 </li>

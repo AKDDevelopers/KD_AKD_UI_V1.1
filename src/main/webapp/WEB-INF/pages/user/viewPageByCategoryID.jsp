@@ -94,26 +94,29 @@ a.thumbnail {
 						<div class="row-nav-left-content" ng-cloak>
 							<div class="row">
 							   <div class="col-sm-3" id="left-side-nav" >
-							   <%@include file="../layout/left-side-bar.jsp"%>	
 							   
-							   <div class="content-wrapper">
-								  <%@include file="include/user-page-layout/content-header.jsp"%>
-								</div>
-							   
-							   	   <!-- <ul class="category-menu nav nav-pills nav-stacked">
+							   <!--  <ul class="category-menu nav nav-pills nav-stacked">
 							   	   		 <li class="bg-cate">
 							   	   		 	<span>
 							   	   		 		<i class="{{getCategoryByID.ICON}}"></i>
 					  	   					</span>
 					  	   					{{getCategoryByID.CAT_NAME}}
 					  	   				</li>
-					  	   				<li  class="cates-main " ng-repeat="parentCat in parentCategory" ng-click="getAllDocumentByCatID(parentCat.CAT_ID);getTotalDocByCatID(parentCat.TOTAL_DOC)">  ng-click="updateTotalDocByCatID(parentCat.CAT_ID)"
+					  	   				<li  class="cates-main " ng-repeat="parentCat in parentCategory" ng-click="getAllDocumentByCatID(parentCat.CAT_ID);getTotalDocByCatID(parentCat.TOTAL_DOC)"> 
 					  	   					<a data-toggle="pill">{{parentCat.CAT_NAME}} ( <b>{{parentCat.TOTAL_DOC}}</b>​ )</a> 
 					  	   				</li>			  	   				
-							   	   </ul> -->
+							   	   </ul>  -->
+							   
+							    <%@include file="../layout/left-side-bar.jsp"%>	
+							   
+							   <div class="content-wrapper">
+								  <%@include file="include/user-page-layout/content-header.jsp"%>
+								</div> 
+							   
+							   	   
 							   </div>
 						  		<div class="col-sm-9" ng-if="parentCategory[0]">	
-									<div class="body-cates tab-content">							
+									<div ng-if="parentCategory[0].TOTAL_DOC>0" class="body-cates tab-content">							
 										<div id="documentBox" class="tab-pane fade in active" ng-init="getAllDocumentByCatID(parentCategory[0].CAT_ID)">								
 											<div ng-repeat="slide in documentByCatID track by $index" class="col-lg-4 col-sm-6 col-xs-12">											    
 											     <!-- for Track user log -->	
