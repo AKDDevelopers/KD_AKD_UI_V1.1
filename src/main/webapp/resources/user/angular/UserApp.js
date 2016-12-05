@@ -5,6 +5,19 @@ var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
 var API_PATH = "http://localhost:1111";
 var UI_PATH = "http://192.168.178.202:2222";
 
+$(function(){
+
+//	$("ul").on("click", "li", function(e) {
+//		$(this).children('ul').slideToggle();
+//		angular.element('#userCtrl').scope().getAllDocumentByCatID($rootScope.currentSubCategory);
+//        console.log("clicked");
+//        e.stopPropagation();
+//        
+//        
+//     });
+
+});
+
 
 
 
@@ -416,6 +429,18 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 	}
 	
 	$rootScope.currentTotalPage = 0;
+	
+	
+	
+	///test
+	
+	$scope.test = function(e){
+		e.stopPropagation();
+		var el = e.target;
+		$(el).siblings('ul').slideToggle();
+	}
+	
+	///
 	$scope.getAllDocumentByCatID=function(CatID){
 
 		$rootScope.currentSubCategory=CatID;		//First It is close!!
@@ -438,7 +463,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 						
 			if(response.data.DATA==null && $scope.currentTotalDoc!=0){				
 				$scope.filter.page=1;
-				$scope.getAllDocumentByCatID(CatID);	// JUST DISABLE IT ON 05/12/2016 BUT NOT CHECK 100%. MEAN WE CAN OPEN IT.
+				/*$scope.getAllDocumentByCatID(CatID);*/	// JUST DISABLE IT ON 05/12/2016 BUT NOT CHECK 100%. MEAN WE CAN OPEN IT.
 				
 				
 			}

@@ -52,14 +52,6 @@ public class UserController {
 		return "user/details";
 	}
 	
-	@RequestMapping(value="/view/{ParentID}", method=RequestMethod.GET)
-	public String viewPageByCategoryID(@PathVariable("ParentID") String ParentID, ModelMap model,@RequestParam("p") String menuName){
-	//	System.out.println("mainMenu==>" + menuName);
-		model.put("ParentID", ParentID);
-		model.put("PAGE_TITLE", menuName);
-		return "user/viewPageByCategoryID";
-	}
-	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
 		return new ModelAndView("redirect:" + LOGIN_URL);

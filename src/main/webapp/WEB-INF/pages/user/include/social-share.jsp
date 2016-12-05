@@ -1,7 +1,8 @@
 <%@ page pageEncoding="utf-8"%>
 <style>
 .mySocailCustom{
-	float:left;
+	/* float:right; */
+	right: 0px;
 	position: absolute;
 	margin-top: 20px;
 	z-index: 9999;
