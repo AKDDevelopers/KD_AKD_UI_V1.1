@@ -93,7 +93,6 @@
                  <li ng-repeat="sub3 in sub2.SUB_CATEGORIES" ng-init="sub3.ICON='fa fa-heart'" ng-click="getAllDocumentByCatID(sub3.CAT_ID);getTotalDocByCatID(sub3.TOTAL_DOC);test($event)">
                   <a href="#"><i class="{{sub3.ICON}}"></i> {{sub3.CAT_NAME}}
                     <span class="pull-right-container">
-                    
                       <i ng-if="sub3.TOTAL_SUB>0" class="fa fa-angle-left pull-right"></i>
                       <span class="label label-primary pull-right">{{sub3.TOTAL_DOC}}</span>
                     </span>
