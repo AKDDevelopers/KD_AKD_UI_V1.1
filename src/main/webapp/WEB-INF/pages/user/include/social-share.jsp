@@ -3,9 +3,9 @@
 .mySocailCustom{
 	/* float:right; */
 	right: 0px;
-	position: absolute;
+	position: fixed;
 	margin-top: 20px;
-	z-index: 9999;
+	z-index: 1;
 }
 div.a2a_full_footer a{
     display: none;

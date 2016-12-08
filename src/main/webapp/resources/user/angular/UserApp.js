@@ -143,6 +143,14 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 		}
 	}	
 	
+	
+	$scope.toggleSubCategory = function(e){
+		e.stopPropagation();
+		var el = e.target;
+		$(el).siblings('ul').slideToggle();
+	}
+	
+	
 	$scope.getCategoryByParentID=function(parentID){	
 		$scope.getCategoryByID(parentID);
 		$http({
@@ -430,17 +438,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 	
 	$rootScope.currentTotalPage = 0;
 	
-	
-	
-	///test
-	
-	$scope.test = function(e){
-		e.stopPropagation();
-		var el = e.target;
-		$(el).siblings('ul').slideToggle();
-	}
-	
-	///
+
 	$scope.getAllDocumentByCatID=function(CatID){
 
 		$rootScope.currentSubCategory=CatID;		//First It is close!!

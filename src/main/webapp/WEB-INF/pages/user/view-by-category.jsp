@@ -73,6 +73,10 @@ a.thumbnail {
 .content-container{
 	margin-top: 15px;
 }
+
+#left-side-nav {
+    z-index: 2;
+}
   
 </style>
 
