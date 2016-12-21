@@ -77,6 +77,24 @@ a.thumbnail {
 #left-side-nav {
     z-index: 2;
 }
+
+
+
+/* Sub2 Active Class  */
+.skin-blue .sidebar-menu>li>ul>li.active>a {
+    background: #40c360;
+}
+
+/* Sub3 Active Class  */
+.skin-blue .sidebar-menu>li>ul>li>ul>li.active>a {
+    background: #40c380;
+}
+
+/* Sub4 Active Class  */
+.skin-blue .sidebar-menu>li>ul>li>ul>li>ul>li.active>a {
+    background: #40c400;
+}
+
   
 </style>
 
@@ -150,20 +168,17 @@ a.thumbnail {
 	 <%@include file="include/script/script.jsp"%>
 	 
 	 <!-- New code here -->
-	<script src="${pageContext.request.contextPath}/resources/plugins/fastclick/fastclick.min.js"></script> 
-	<script src="${pageContext.request.contextPath}/resources/plugins/AdminLTE/js/app.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/plugins/AdminLTE/js/demo.js"></script>
-	
-	
-	<script>
-	
+	 
+	 <script>
 		$scope.toggleSubCategory = function(e){
 			e.stopPropagation();
 			var el = e.target;
 			$(el).siblings('ul').slideToggle();		
 		}
-	
 	</script>
-	
+	 
+	<script src="${pageContext.request.contextPath}/resources/plugins/fastclick/fastclick.min.js"></script> 
+	<script src="${pageContext.request.contextPath}/resources/plugins/AdminLTE/js/app.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/plugins/AdminLTE/js/demo.js"></script>	
 </body>
 </html>
