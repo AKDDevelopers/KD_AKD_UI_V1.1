@@ -21,6 +21,12 @@ $(function(){
 
 
 
+
+
+
+
+
+
 ///////////////////		START MAIN CONTROLLLER FOR USER BLOCK	/////////////////
 app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$window', function($scope,$rootScope,$http,$location,$sce,$window){	//$rootScope, $scope, $http, $location, $localStorage, loginService
 	$rootScope.currentSubCategory="currentSubCategory";
@@ -142,13 +148,6 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 			
 		}
 	}	
-	
-	
-	$scope.toggleSubCategory = function(e){
-		e.stopPropagation();
-		var el = e.target;
-		$(el).siblings('ul').slideToggle();
-	}
 	
 	
 	$scope.getCategoryByParentID=function(parentID){	
