@@ -5,26 +5,6 @@ var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
 var API_PATH = "http://localhost:1111";
 var UI_PATH = "http://192.168.178.202:2222";
 
-$(function(){
-
-//	$("ul").on("click", "li", function(e) {
-//		$(this).children('ul').slideToggle();
-//		angular.element('#userCtrl').scope().getAllDocumentByCatID($rootScope.currentSubCategory);
-//        console.log("clicked");
-//        e.stopPropagation();
-//        
-//        
-//     });
-
-});
-
-
-
-
-
-
-
-
 
 
 ///////////////////		START MAIN CONTROLLLER FOR USER BLOCK	/////////////////
@@ -1507,26 +1487,20 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 	// SHARE TO FACEBOOK
 	    
     $scope.FBShare = function(docID,thumbnail) {
-		var url = UI_PATH + '/' + window.location.pathname;
+		var url ='http://docs.khmeracademy.org/' + window.location.pathname;
 		 
 		 FB.ui({
 		   method: 'share',
 		   display: 'popup',
-		   caption: 'TESTING',
+		   caption: 'Share',
 		   href:  url ,
 		   picture: thumbnail,
 		   
 		 }, function(response){
 			 if (response && !response.error_code) {
-			        /*status = 'success';
-			        $.event.trigger('fb-share.success');
-			        alert("success");*/
 				 $scope.updateTotalShare(docID);
 
 			    } else {
-			        /*status = 'error';
-			        $.event.trigger('fb-share.error');
-			        alert("fail");*/
 			    }
 		 });	
 	};
