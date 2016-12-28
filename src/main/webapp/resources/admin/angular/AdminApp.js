@@ -8,41 +8,41 @@ var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
 app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 	$rootScope.API_PATH_ANGULAR = API_PATH;	// USE IT FOR SET IMAGE URL IN WEB PAGE.
 
-	//	CATEGORY	
-	
+	//	CATEGORY
+
 	$scope.getAllCategoryNewFun = function(){
 		$http({
 			url:API_ACCESS_CONTROLLER_URL + '/category',
-			method:'GET'			
+			method:'GET'
 		}).then(function(response){
 		//	console.log(response.data.DATA);
 			$scope.allCategoryNewFun=response.data.DATA;
 		//	console.log("GET ALL CAT ADMIN");
 		//	console.log($scope.getAllCategory);
-			
+
 		}, function(response){
-		
+
 		});
 	}
-	
+
 	$scope.getAllCategoryNewFun();
-	
+
 	$scope.getAllCategoryByLevel = function(level){
 		$http({
 			url:API_ACCESS_CONTROLLER_URL + '/getAllCatByLevel?level='+level,
-			method:'GET'			
+			method:'GET'
 		}).then(function(response){
 			$scope.allCategoryByLevel=response.data.DATA;
 			console.log("all cat by level");
 			console.log($scope.allCategoryByLevel);
-			
+
 		}, function(response){
-		
+
 		});
 	}
-	
-	
-	
+
+
+
 	$scope.getCategoryCount = function() {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/getCategoryCount',
@@ -51,34 +51,34 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 			$scope.CategoryCount = response.data.COUNT;
 			console.log($scope.CategoryCount);
 		}, function(response) {
-			
+
 		});
 	}
-	
+
 	$scope.getCategoryCount();
-	
-	$scope.showCategoryByLimit = function(){			
+
+	$scope.showCategoryByLimit = function(){
 		$http({
 			url:API_ACCESS_CONTROLLER_URL + '/getAllCategoryByLimit',
 			method:'GET',
 			params : $scope.filter
 		}).then(function(response){
 			console.log(response.data.DATA);
-			$scope.category=response.data.DATA;	
+			$scope.category=response.data.DATA;
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
 			//console.log("ALL Cat in admin"+$scope.category);
-		}, function(response){		
-		
+		}, function(response){
+
 		});
-	}	
+	}
 	$scope.showCategoryByLimit();
-	
+
 	//TODO: default filter
 	$scope.filter = {
 		page: 1,
 		limit: 10
 	};
-	
+
 	var PAGINATION = angular.element("#PAGINATION");
 	$scope.setPagination = function(totalPage){
 		PAGINATION.bootpag({
@@ -91,14 +91,14 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 	        next: 'Next',
 	        prev: 'Prev',
 	        maxVisible: 10
-		});		
+		});
 	}
-	
+
 	PAGINATION.on("page", function(event, num){
 		$scope.filter.page = num;
 		$scope.showCategoryByLimit();
 	});
-	
+
 	$scope.removeCategory = function(id) {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/category/' + id,
@@ -106,10 +106,10 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 		}).then(function() {
 			$scope.showCategoryByLimit();
 		}, function() {
-			
+
 		});
 	}
-	
+
 	$scope.alertDelete = function(id) {
 		swal({
 			title : "Are you sure?",
@@ -135,10 +135,10 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 		$scope.sta = category.c.STATUS;
 		$scope.icon = category.c.ICON;
 		$scope.cid = category.c.CAT_ID;
-		$scope.catNumOrder = category.c.ORDER;	
+		$scope.catNumOrder = category.c.ORDER;
 		$scope.catLevel = category.c.CAT_LEVEL;
 	}
-	
+
 	$scope.updateCategory = function() {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/category',
@@ -157,9 +157,9 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 			$scope.showCategoryByLimit();
 		},function(response) {
 
-			
+
 			$scope.CategoryCount = response.data.COUNT;
-			
+
 		});
 	}
 
@@ -168,9 +168,9 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 		swal("Updated!", "You updated the user!", "success")
 	}
 
-	
+
 	$scope.subCategoryLevel = [
-	                           
+
 			     		      {
 			     		    	 "LEVEL_NUM"	: 1,
 				     		     "LEVEL_DES"	: "Level One"
@@ -186,38 +186,102 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 			     		      {
 			     		    	 "LEVEL_NUM"	: 4,
 				     		     "LEVEL_DES"	: "Level Four"
-			     		      }	
+			     		      }
 		     		    ];
-	
-	
-	
+
+
+
 	// UPLOAD CATEGORY AND SUB-CATEGORY BLOCK
 	$scope.ParentID = "";
 	$scope.catIcon="";
-	$scope.des="";	
+	$scope.des="";
 	$scope.sta = 1;
 	$scope.catLevel = 0;
 	$scope.catNumOrder = 0;
-	$scope.uploadFolder = function(event) {
+
+
+
+
+
+// TODO: uploadCategory Image
+	$scope.uploadImage = function(){
+		$scope.myfile = $( '#file' )[0].files[0];
+
+	//	alert(1);
+
 		$(".upload_waiting").show();
-		event.preventDefault();
+		//event.preventDefault();
+		var frmData = new FormData();
+		console.log("FILE"+$scope.myfile);
+		frmData.append("cateId", $scope.ParentID);
+		frmData.append("files",$scope.myfile);
+
+
+		$http({
+			url : API_ACCESS_CONTROLLER_URL + '/uploadCateThumbnail',
+			method : 'POST',
+			data : frmData,
+			transformRequest : angular.identity,
+			headers : {
+				'Content-Type' : undefined
+			}
+		}).then(function(response) {
+
+			$(".upload_waiting").hide();
+			console.log(response.data.DATA);
+			$scope.uploadFolder(response.data.DATA);
+
+			swal(
+				  'Good job!',
+				  'Thumbnail image uploaded!',
+				  'success'
+				)
+
+
+		}, function(response) {
+			$(".upload_waiting").hide();
+			console.log("RESPONSE ERROR"+response);
+			swal(
+				  'Sorry!',
+				  'Folder create Fail!',
+				  'error'
+				)
+		});
+
+
+
+
+	}
+
+	$scope.uploadFolder = function(path) {
+		alert("upload folder!");
+
+		$(".upload_waiting").show();
+		// event.preventDefault();
 		var frmData = new FormData();
 		frmData.append("folderID", $scope.ParentID);
 		frmData.append("folderName", $scope.folderName);
 		frmData.append("folderDes", $scope.des);
-		frmData.append("folderStatus", $scope.sta);	
+		frmData.append("folderStatus", $scope.sta);
 		frmData.append("catIcon", $scope.catIcon);
+
+
+
+
+
 		if($scope.showCatBox==true){
 			//$scope.catLevel = 1;
 			$scope.catLevel = $scope.selectedLevel;
-			
+
 			$scope.catNumOrder = 0;
 		}else{
 			$scope.catLevel = 0;
 		}
-		
+
 		frmData.append("catNumOrder", $scope.catNumOrder);
 		frmData.append("catLevel", $scope.catLevel);
+		console.log("upload folder "+path)
+		frmData.append("catImage",path);
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/uploadFolder',
 			method : 'POST',
@@ -233,16 +297,16 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 			$scope.folderName="";
 			$scope.des="";
 			$scope.catIcon="";
-			
+
 			swal(
 				  'Good job!',
-				  'Folder create Successful!',
+				  'New Category has been created Successful!',
 				  'success'
 				)
-			
+
 			// alert("ID: "+$scope.ParentID);
 			//console.log("Check Upload Foler here!!");
-			//console.log(response);
+			// console.log("RESPOSE"+response);
 			/*$scope.message = response.data.message;
 			$scope.folderName = category.c.CAT_NAME;
 			$scope.des = category.c.REMARK;
@@ -263,8 +327,8 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 
 // ======================User Controller===========================
 app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$window) {
-	
-	
+
+
 	$scope.getUserData = function() {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/user',
@@ -274,18 +338,18 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 			$scope.user = response.data.DATA;
 			//console.log($scope.user);
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
-			
+
 		}, function(response) {
-			
+
 		});
 	}
-	
+
 	//TODO: default filter
 	$scope.filter = {
 		page: 1,
 		limit: 10
 	};
-	
+
 	var PAGINATION = angular.element("#PAGINATION");
 	$scope.setPagination = function(totalPage){
 		PAGINATION.bootpag({
@@ -298,9 +362,9 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 	        next: 'Next',
 	        prev: 'Prev',
 	        maxVisible: 10
-		});		
+		});
 	}
-	
+
 	PAGINATION.on("page", function(event, num){
 		$scope.filter.page = num;
 		$scope.getUserData();
@@ -326,7 +390,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 		}).then(function(respone) {
 			$scope.getUserData();
 		}, function(respone) {
-			
+
 		});
 	}
 
@@ -362,7 +426,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 		}).then(function() {
 			$scope.getUserData();
 		}, function() {
-			
+
 		});
 	}
 
@@ -370,7 +434,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 		$scope.updateUser();
 		swal("Updated!", "You updated the user!", "success")
 	}
-	
+
 	$scope.removeUser = function(id) {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/user/' + id ,
@@ -378,7 +442,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 		}).then(function() {
 			$scope.getUserData();
 		}, function() {
-			
+
 		});
 	}
 
@@ -398,7 +462,7 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 							"success");
 				});
 	}
-	
+
 	$scope.getUserCount = function() {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/getUserCount',
@@ -411,10 +475,10 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 		});
 	}
 	$scope.getUserCount();
-	
-	
-	
-	
+
+
+
+
 
 });
 //============================End of User Controller===============
@@ -422,12 +486,12 @@ app.controller('UserCtrl', function($scope, $rootScope, $http, $sce, $timeout,$w
 //============================Start Document Controller===============
 app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout,$window) {
 	$rootScope.userID = $window.userID;
-	
-	
+
+
 	$scope.showSingleInput = false;
 	$scope.showMultipleInput = false;
-	
-	
+
+
 	$scope.getUploadOption = function(option){
 		if(option == 'Single'){
 			$scope.showSingleInput = true;
@@ -437,50 +501,50 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 			$scope.showSingleInput = false;
 		}
 	}
-	
-	$scope.uploadDocument = function(event){		
-		event.preventDefault();	
+
+	$scope.uploadDocument = function(event){
+		event.preventDefault();
 		$(".upload_waiting").show();
 		var files = event.target.files;
 		var frmData = new FormData();
-		
-		frmData.append("usreID", $rootScope.userID);		
+
+		frmData.append("usreID", $rootScope.userID);
 		frmData.append("catID", $scope.catID);
 		frmData.append("des", $scope.des);
-		
-		if($scope.uploadOption == 'Single'){	
-			
+
+		if($scope.uploadOption == 'Single'){
+
 			var file = $('#singleUploadDocument')[0].files[0];
 			frmData.append("files", file);
 			frmData.append("title", $scope.selectedFile.name);
 		}else{
-								
+
 			var file = $('#multipleUploadDocument')[0].files;
 			for(var i = file.length; i >= 0; i-- ){
 				frmData.append("files", file[i]);
 			}
-			
+
 			$('input[name^="fileName"]').each(function() {
 				var fileTitle = $(this).val();
-				var con = fileTitle.toLowerCase();				
+				var con = fileTitle.toLowerCase();
 				if(con.endsWith('.pdf') || con.endsWith('.ppt') || con.endsWith('.pptx') || con.endsWith('.doc') || con.endsWith('.docx')){
-					fileTitle=fileTitle.substring(0, fileTitle.lastIndexOf('.'));	
-				}				
+					fileTitle=fileTitle.substring(0, fileTitle.lastIndexOf('.'));
+				}
 				frmData.append("title",fileTitle);
-				
+
 				//console.log("Title: "+fileTitle);
 			});
 		}
-		
+
 		/*console.log("UserID: "+$rootScope.userID);
 		console.log("Cat: "+$scope.catID);
 		console.log("des: "+$scope.des);
 		console.log("fileName: "+$scope.selectedFile.name);*/
 
-		
-		
-		
-		
+
+
+
+
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/uploadDocument',
 			method :'POST',
@@ -496,7 +560,7 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 				  'Document Upload Successful!',
 				  'success'
 				)
-			
+
 		}, function(response) {
 			$(".upload_waiting").hide();
 			swal(
@@ -504,13 +568,13 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 				  'Document Upload Fail!',
 				  'error'
 				)
-			
+
 		});
 	}
-	
-	
-	
-		
+
+
+
+
 	$scope.getAllDocumentCount = function() {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/getDocumentCount',
@@ -532,16 +596,16 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 			console.log($scope.document);
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
 		}, function(response) {
-			
+
 		});
 	}*/
-	
+
 	//$scope.getDocumentData();
-	
-	
-	
+
+
+
 	// START NEW CODE UPDATE BY CHIVORN
-	
+
 	$scope.getTotalDocumentByStatus = function(status) {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/getTotalDocumentByStatus?status=' + status,
@@ -552,9 +616,9 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 
 		});
 	}
-	
+
 	$rootScope.currentStatus="";
-	
+
 	$scope.getDocumentByStatus = function(status) {
 		$rootScope.currentStatus = status;
 		$scope.getTotalDocumentByStatus($rootScope.currentStatus);
@@ -563,28 +627,28 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 			method : 'GET',
 			params : $scope.filter
 		}).then(function(response) {
-			
+
 			$scope.document = response.data.DATA;
-			
+
 			if(response.data.PAGING != null){
-				$rootScope.currentTotalPage = response.data.PAGING.TOTAL_PAGES;				
-			}else{	
+				$rootScope.currentTotalPage = response.data.PAGING.TOTAL_PAGES;
+			}else{
 				//$rootScope.currentTotalPage = 0;
 				$rootScope.currentTotalPage = Math.ceil($scope.documentCountByStatus/$scope.filter.limit); 	// TOTAL PAGE HAS PROBLEM IF DON'T USE LIKE THIS.
-			
+
 			}
-			
+
 		//	alert("totalPge"+$rootScope.currentTotalPage);
 			$scope.setPagination($rootScope.currentTotalPage);
 
-			
+
 		}, function(response) {
-			
+
 		});
 	}
-	
+
 	$scope.getDocumentByStatus(1);
-	
+
 	$scope.documentStatus = [
 		     		      {
 		     		        "STATUS_NAME"	: "Pending Document",
@@ -601,61 +665,61 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 		     		      {
 		     		    	 "STATUS_NAME"	: "Deleted Document",
 			     		     "STATUS_VALUE"	: 3
-		     		      }	     		      
+		     		      }
 	     		    ];
 	$scope.selectedStatus = $scope.documentStatus[$rootScope.currentStatus].STATUS_VALUE;
 /*	console.log($scope.documentStatus[0].STATUS_VALUE);*/
-	
-	
-	$scope.updateDocumentStatus = function(docID,status) {    	
-    	swal({   title: "តើអ្នកពិតជាចង់លុបមែនទេ?",   
-			text: "អ្នកនឹងមិនអាចហៅវាមកវិញបានទេ!",   
-			type: "warning",   showCancelButton: true,   
-			confirmButtonColor: "#DD6B55",   
-			confirmButtonText: "យល់ព្រម",   
-			cancelButtonText: "បដិសេធ",   
+
+
+	$scope.updateDocumentStatus = function(docID,status) {
+    	swal({   title: "តើអ្នកពិតជាចង់លុបមែនទេ?",
+			text: "អ្នកនឹងមិនអាចហៅវាមកវិញបានទេ!",
+			type: "warning",   showCancelButton: true,
+			confirmButtonColor: "#DD6B55",
+			confirmButtonText: "យល់ព្រម",
+			cancelButtonText: "បដិសេធ",
 			closeOnConfirm: false,   closeOnCancel: false },
-			function(isConfirm){   
-			 	if (isConfirm) {     			 		
+			function(isConfirm){
+			 	if (isConfirm) {
 			 		$http({
 						url : API_ACCESS_CONTROLLER_URL + '/updateDocumentStatus?docID=' + docID + '&status='+ status,
 						method : 'PUT'
 					}).then(function(response) {
-						swal("បានជោគជ័យ!", "ឯកសារត្រូវបានលុប", "success"); 
+						swal("បានជោគជ័យ!", "ឯកសារត្រូវបានលុប", "success");
 						$scope.getDocumentByStatus($rootScope.currentStatus);
 						$scope.countTotalDocByUserID();
 						$scope.getDocumentByUser();
 					}, function(response) {
-						
+
 					});
 			 	}
-		 		else {     
-		 			swal("បានបដិសេធ", "ឯកសាររបស់អ្នកគឺមានសុវត្ថិភាព :)", "error");   
-		 		} 
+		 		else {
+		 			swal("បានបដិសេធ", "ឯកសាររបស់អ្នកគឺមានសុវត្ថិភាព :)", "error");
+		 		}
 		 	});
 	}
-	
+
 	$scope.getAllCategoryNewFun = function(){
 		$http({
 			url:API_ACCESS_CONTROLLER_URL + '/category',
-			method:'GET'			
+			method:'GET'
 		}).then(function(response){
-			$scope.allCategoryNewFun=response.data.DATA;			
+			$scope.allCategoryNewFun=response.data.DATA;
 		}, function(response){
-		
+
 		});
 	}
-	
+
 	$scope.getAllCategoryNewFun();
-	
-	
-	
-	
+
+
+
+
 	// STOP NEW CODE UPDATE BY CHIVORN
-	
-	
-	
-	
+
+
+
+
 //	$scope.getAllDocumentCount();
 
 	//TODO: default filter
@@ -663,7 +727,7 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 		page: 1,
 		limit: 10
 	};
-	
+
 	var PAGINATION = angular.element("#PAGINATION");
 	$scope.setPagination = function(totalPage){
 		PAGINATION.bootpag({
@@ -676,30 +740,30 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 	        next: 'Next',
 	        prev: 'Prev',
 	        maxVisible: 10
-		});		
+		});
 	}
-	
+
 	PAGINATION.on("page", function(event, num){
 		$scope.filter.page = num;
 		//$scope.getDocumentData();
 		$scope.getDocumentByStatus($rootScope.currentStatus);
 	});
-	
+
 	$rootScope.getAllCategory = function(){
 		$http({
 			url:API_ACCESS_CONTROLLER_URL + '/category',
-			method:'GET'			
+			method:'GET'
 		}).then(function(response){
 		//	console.log(response.data.DATA);
 			$scope.AllCategory=response.data.DATA;
 		//	console.log("GET ALL CAT ADMIN");
 		//	console.log($scope.getAllCategory);
-			
+
 		}, function(response){
-		
+
 		});
 	}
-	
+
 	$scope.removeDocument = function(id) {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/document/' + id ,
@@ -708,10 +772,10 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 			//$scope.getDocumentData();
 			$scope.getDocumentByStatus($rootScope.currentStatus);
 		}, function() {
-			
+
 		});
 	}
-	
+
 	$scope.alertDelete = function(id) {
 		swal({
 			title : "Are you sure?",
@@ -743,9 +807,9 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 		$scope.catID = document.d.CAT_ID;
 		$scope.status = document.d.STATUS;
 		$scope.docID= document.d.DOC_ID;
-		
+
 	}
-	
+
 	$scope.updateDocument = function() {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/document',
@@ -769,15 +833,15 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 			//$scope.getDocumentData();
 			$scope.getDocumentByStatus($rootScope.currentStatus);
 		}, function() {
-			
+
 		});
 	}
 
 	$scope.alertUpdate = function() {
 		$scope.updateDocument();
 		swal("Updated!", "Document is updated!", "success")
-	}	
-	
+	}
+
 
 });
 
@@ -791,25 +855,25 @@ app.controller('CommentCtrl', function($scope, $http, $window) {
 			url : API_ACCESS_CONTROLLER_URL + '/comment',
 			method : 'GET',
 			params : $scope.filter
-			
+
 		}).then(function(response) {
 			console.log(response.data.DATA);
 			$scope.comment = response.data.DATA;
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
-			
+
 		}, function(response) {
-			
+
 		});
 	}
 
 	$scope.getCommentData();
-	
+
 	//TODO: default filter
 	$scope.filter = {
 		page: 1,
 		limit: 10
 	};
-	
+
 	var PAGINATION = angular.element("#PAGINATION");
 	$scope.setPagination = function(totalPage){
 		PAGINATION.bootpag({
@@ -822,14 +886,14 @@ app.controller('CommentCtrl', function($scope, $http, $window) {
 	        next: 'Next',
 	        prev: 'Prev',
 	        maxVisible: 10
-		});		
+		});
 	}
-	
+
 	PAGINATION.on("page", function(event, num){
 		$scope.filter.page = num;
 		$scope.getCommentData();
 	});
-	
+
 	$scope.removeComment = function(id) {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/comment/' + id,
@@ -857,11 +921,11 @@ app.controller('CommentCtrl', function($scope, $http, $window) {
 							"success");
 				});
 	}
-	
+
 	$scope.faildAlert = function(title,message){
 		swal(title, message);
 	}
-	
+
 	$scope.getDataForUpdate = function(com) {
 		$scope.createdDate = com.c.CREATED_DATE;
 		$scope.docTitle = com.c.DOCUMENTS[0].TITLE;
@@ -872,7 +936,7 @@ app.controller('CommentCtrl', function($scope, $http, $window) {
 		$scope.status = com.c.STATUS;
 		$scope.comID = com.c.COMMENT_ID;
 	}
-	
+
 	$scope.updateComment = function() {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/comment',
@@ -888,16 +952,16 @@ app.controller('CommentCtrl', function($scope, $http, $window) {
 		}).then(function() {
 			$scope.getCommentData();
 		}, function() {
-			
+
 		});
 	}
-	
+
 	$scope.alertUpdateComment = function() {
 		$scope.updateComment();
 		swal("Updated!", "Comment has been updated!", "success")
-	}	
-	
-	
+	}
+
+
 });
 
 
@@ -922,7 +986,7 @@ app.controller('SavelistCtrl', function($scope, $http, $window) {
 		page: 1,
 		limit: 10
 	};
-	
+
 	var PAGINATION = angular.element("#PAGINATION");
 	$scope.setPagination = function(totalPage){
 		PAGINATION.bootpag({
@@ -935,15 +999,15 @@ app.controller('SavelistCtrl', function($scope, $http, $window) {
 	        next: 'Next',
 	        prev: 'Prev',
 	        maxVisible: 10
-		});		
+		});
 	}
-	
+
 	PAGINATION.on("page", function(event, num){
-		
+
 		$scope.filter.page = num;
 		$scope.getSavelistData();
 	});
-	
+
 	$scope.removeSavelist = function(id) {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/savelist/' + id,
@@ -951,10 +1015,10 @@ app.controller('SavelistCtrl', function($scope, $http, $window) {
 		}).then(function() {
 			$scope.getSavelistData();
 		}, function() {
-			
+
 		});
 	}
-	
+
 	$scope.alertDelete = function(id) {
 		swal({
 			title : "Are you sure?",
@@ -971,7 +1035,7 @@ app.controller('SavelistCtrl', function($scope, $http, $window) {
 							"success");
 				});
 	}
-	
+
 	$scope.getDataForUpdate = function(sl) {
 		$scope.listName = sl.s.LIST_NAME;
 		$scope.createdDate = sl.s.CREATED_DATE;
@@ -997,15 +1061,15 @@ app.controller('SavelistCtrl', function($scope, $http, $window) {
 		}).then(function() {
 			$scope.getSavelistData();
 		}, function() {
-			
+
 		});
 	}
-	
+
 	$scope.alertUpdateSavelist = function() {
 		$scope.updateSavelist();
 		swal("Updated!", "List is updated!", "success")
-	}	
-	
+	}
+
 });
 //=======================End Savelist Controller======================
 
@@ -1022,7 +1086,7 @@ app.controller('FeedbackCtrl', function($scope, $http, $window) {
 			console.log($scope.feedback);
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
 		}, function(response) {
-			
+
 		});
 	}
 		//TODO: default filter
@@ -1030,9 +1094,9 @@ app.controller('FeedbackCtrl', function($scope, $http, $window) {
 		page: 1,
 		limit: 10
 	};
-	
+
 	var PAGINATION = angular.element("#PAGINATION");
-	
+
 	$scope.setPagination = function(totalPage){
 		PAGINATION.bootpag({
 			total: totalPage,          // total pages
@@ -1044,16 +1108,16 @@ app.controller('FeedbackCtrl', function($scope, $http, $window) {
 	        next: 'Next',
 	        prev: 'Prev',
 	        maxVisible: 10
-		});		
+		});
 	}
-	
+
 	PAGINATION.on("page", function(event, num){
 		$scope.filter.page = num;
 		$scope.getFeedbackData();
 	});
 	$scope.getFeedbackData();
 
-	
+
 	$scope.removeFeedback = function(id) {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/feedback/' + id,
@@ -1064,7 +1128,7 @@ app.controller('FeedbackCtrl', function($scope, $http, $window) {
 			swal("Loading Data Fiald!", "Please check your connection again!");
 		});
 	}
-	
+
 	$scope.alertDelete = function(id) {
 		swal({
 			title : "Are you sure?",
@@ -1081,11 +1145,11 @@ app.controller('FeedbackCtrl', function($scope, $http, $window) {
 					"success");
 		});
 	}
-	
+
 	$scope.readFeedback = function(feedback) {
 		$scope.description = feedback.f.DES;
 	}
-	
+
 });
 //=================================================================
 
@@ -1105,7 +1169,7 @@ app.controller('ReportCtrl', function($scope, $http, $window) {
 		});
 	}
 	$scope.getReportData();
-	
+
 	$scope.removeReport = function(id) {
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/report/' + id,
@@ -1113,10 +1177,10 @@ app.controller('ReportCtrl', function($scope, $http, $window) {
 		}).then(function() {
 			$scope.getReportData();
 		}, function() {
-			
+
 		});
 	}
-	
+
 	$scope.alertDelete = function(id) {
 		swal({
 			title : "Are you sure?",
@@ -1139,7 +1203,7 @@ app.controller('ReportCtrl', function($scope, $http, $window) {
 		page: 1,
 		limit: 10
 	};
-	
+
 	var PAGINATION = angular.element("#PAGINATION");
 	$scope.setPagination = function(totalPage){
 		PAGINATION.bootpag({
@@ -1152,20 +1216,20 @@ app.controller('ReportCtrl', function($scope, $http, $window) {
 	        next: 'Next',
 	        prev: 'Prev',
 	        maxVisible: 10
-		});		
+		});
 	}
-	
+
 	PAGINATION.on("page", function(event, num){
 		$scope.filter.page = num;
 		$scope.getReportData();
 	});
-	
+
 	$scope.readReport = function(report) {
 		$scope.description = report.r.REMARK;
 	}
-	
-	
-	
+
+
+
 });
 
 ///////////////////		START FILTER STRING WITH LIMIT LEGNH	/////////////////
@@ -1180,5 +1244,3 @@ return input;
 return $filter('limitTo')(input, limit) + '...';
 };
 }]);
-
-

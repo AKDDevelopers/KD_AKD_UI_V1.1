@@ -19,41 +19,47 @@
 								placeholder="Category title " name="folderName"
 								ng-model="folderName">
 						</div>
-						
+
 						<div class="form-group">
-							<label for="categoryTitle">Category Icon</label> 
+							<label for="categoryTitle">Category Icon</label>
 							<input type="text" class="form-control" placeholder="Icon"
 								ng-model="catIcon">
 						</div>
-						
+						<div class="form-group">
+							<label for="categoryTitle">Category Thumbnail</label>
+							<input type="file" class="form-control" placeholder="Icon"
+								ng-model="catThumbnail" id="file">
+						</div>
+
+
 						<div class="form-group"​ ng-show="!showCatBox">
-							<label for="categoryTitle">Category Order Number</label> 
+							<label for="categoryTitle">Category Order Numberaa</label>
 							<input type="number" class="form-control" placeholder="Order Number"
 								ng-model="catNumOrder">
 						</div>
-						
+
 						<div class="form-group" ng-show="showCatBox">
 							<label>Select Level: </label> {{selectedLevel}}
-							<select class="form-control" ng-model="selectedLevel" data-ng-change="getAllCategoryByLevel(selectedLevel-1)">	       
+							<select class="form-control" ng-model="selectedLevel" data-ng-change="getAllCategoryByLevel(selectedLevel-1)">
 		                        <option ng-repeat="level in subCategoryLevel" value="{{level.LEVEL_NUM}}">{{level.LEVEL_DES}}</option>
 		                   	</select>
 						</div>
-						
+
 						<div class="form-group" ng-show="showCatBox">
-							<label>Select its parent:</label> 
-							<select class="form-control" ng-model="ParentID">			       
+							<label>Select its parent:</label>
+							<select class="form-control" ng-model="ParentID">
 		                        <option ng-repeat="cat in allCategoryByLevel" value="{{cat.CAT_ID}}">{{cat.CAT_NAME}}</option>
 		                   	</select>
 						</div>
-						
+
 
 						<!-- <div class="form-group" ng-show="showCatBox">
-							<label>Category:</label> 
-							<select class="form-control" ng-model="ParentID">			       
+							<label>Category:</label>
+							<select class="form-control" ng-model="ParentID">
 		                        <option ng-repeat="cat in allCategoryNewFun | filter:{CAT_LEVEL:'0'}" value="{{cat.CAT_ID}}">{{cat.CAT_NAME}}</option>
 		                   	</select>
 						</div> -->
-			
+
 
 						<div class="form-group">
 							<label for="description">Description</label>
@@ -76,12 +82,10 @@
 			<div class="modal-footer">
 				<!--   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 				<input type="submit" class="btn btn-primary btn-flat"
-					value="Submit" ng-click="uploadFolder($event)">
+					value="Submit" ng-click="uploadImage()">
 			</div>
 		</div>
 
 	</div>
 
 </div>
-
-									
