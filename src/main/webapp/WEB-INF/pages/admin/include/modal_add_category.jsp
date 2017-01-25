@@ -28,12 +28,25 @@
 						<div class="form-group">
 							<label for="categoryTitle">Category Thumbnail</label>
 							<input type="file" class="form-control" placeholder="Icon"
-								ng-model="catThumbnail" id="file">
+								ng-model="catThumbnail" id="file" onchange="loadFile(event)">
+								
+						</div>
+						<div class="row">
+						<div class="col-sm-4"></div>
+						<div class="col-sm-4">
+						<img class="img img-responsive img-rounded" width="300" height="200" id="output"/>
+						</div>
+<script>
+  var loadFile = function(event) {
+    var output = document.getElementById('output');
+    output.src = URL.createObjectURL(event.target.files[0]);
+  };
+</script>
 						</div>
 
 
 						<div class="form-group"​ ng-show="!showCatBox">
-							<label for="categoryTitle">Category Order Numberaa</label>
+							<label for="categoryTitle">Category Order Number</label>
 							<input type="number" class="form-control" placeholder="Order Number"
 								ng-model="catNumOrder">
 						</div>
