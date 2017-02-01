@@ -6,8 +6,8 @@
 		<!-- <span class="cover"><span class="title-cover">គណិតវិទ្យា</span></span> -->
 	</span>
 	<span class="title">{{slide.TITLE | strLimit: 22}}</span>
-	<span class="user-name">{{slide.USERS[0].USER_NAME | strLimit: 22}}</span>
-	<span class="descript">{{slide.DES | strLimit: 22}}</span>
+	<span class="user-name">{{slide.USERS.USER_NAME | strLimit: 22}}</span>
+	<!-- <span class="descript">{{slide.DES | strLimit: 22}}</span> -->
 	<span class="view-count"><span>{{slide.VIEW}}</span> បានមើល</span>
 	<input type="text" value={{slide.THUMBNAIL_URL}} id="thubnail" ng-show="false">
 	<span class="socials">
