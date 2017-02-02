@@ -19,24 +19,18 @@ button.searchBtn
 </style>
 
 <div class="searchBlock"> 
-	<div class="input-group">	
-		<input myEnter="searchPage()" type="text" class="form-control form-search"  placeholder="ស្វែងរក"  ng-model="selected" uib-typeahead="title for title in allDocTitle | filter:$viewValue | limitTo:8">
-	    <!-- <div class="input-group-btn search-panel">
-		    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-		    	<span id="search_concept">{{btnFilter.value}}</span> <span class="caret"></span>
-		    </button>
-		    <ul class="dropdown-menu" role="menu">
-				<li class="divider"></li>
-				<li ng-repeat="search_Filter in searchFilters"> ng-repeat="search_Filter in searchFilters"
-				  <a myVal="{{search_Filter.id}}" style="cursor: pointer;" ng-click="searchFilterClicked($index)">{{search_Filter.value}}</a>
-				</li>
-				<li class="divider"></li>
-		    </ul>
-		</div> -->
-	    <span class="input-group-btn">	    	
-	    	<button class="btn btn-primary searchBtn" ng-click="searchPage()" ng-disabled="!selected">
-		    	<span >&nbsp</span> <span class="glyphicon glyphicon-search"></span>
-		    </button>
-	    </span>
-	</div>
+	
+	<form action="#search" id="frmSearch">
+
+		<div class="input-group">	
+				<input type="text" class="form-control form-search"  id="keyword" placeholder="ស្វែងរក">
+			   
+			    <span class="input-group-btn">	    	
+			    	<button class="btn btn-primary searchBtn">
+				    	<span >&nbsp</span> <span class="glyphicon glyphicon-search"></span>
+				    </button>
+			    </span>
+		</div>
+	
+	</form>
 </div>

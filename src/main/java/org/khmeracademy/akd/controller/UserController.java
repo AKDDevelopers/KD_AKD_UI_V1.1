@@ -21,9 +21,9 @@ public class UserController {
 	@Autowired
 	private String REGISTER_URL;
 	
-	@RequestMapping(value="/",method=RequestMethod.GET)
+	@RequestMapping(value={"/","/docs"},method=RequestMethod.GET)
 	public String index(){
-		return "index";
+		return "index2";
 	}
 	
 	@RequestMapping(value="/feature/{filter}", method=RequestMethod.GET)

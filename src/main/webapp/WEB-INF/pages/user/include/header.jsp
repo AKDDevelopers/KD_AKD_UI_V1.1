@@ -144,7 +144,7 @@ window.fileName="";
 					  <ul class="nav navbar-nav navbar-right">	
 						<li class="dropdown">
 						  <a href="/profile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-						  	<img alt="" data-ng-src="{{API_PATH_ANGULAR}}/resources/img/user-profile/{{userInfoByUserID.PROFILE}}" class="userProfile">						  	
+						  	<img alt="" data-ng-src="{{userInfoByUserID.PROFILE}}" class="userProfile">						  	
 						  </a>
 						  <ul class="dropdown-menu dropdown-item">
 								<li>
@@ -183,6 +183,7 @@ window.fileName="";
 		</div>
 	</nav>
 </div>
+
 <!-- main menu -->
 <div class="main-menu-contain">
 	<nav class="navbar navbar-default navbar-sticky navbar-main-menu">
@@ -203,13 +204,33 @@ window.fileName="";
 							   </span>ទំព័រដើម
 						  </a>
 					  </li>	
-					  			  
-					   <li ng-repeat="mainCat in getAllCategoryAndSubcategory" ng-cloak>
+					  		
+					  <li>
 					  		<a class="menu" href="/cat/{{mainCat.CAT_ID}}?p={{mainCat.CAT_NAME}}" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
-							   <span><i class="{{mainCat.ICON}}" aria-hidden="true"></i>
-							   </span>{{mainCat.CAT_NAME}}
+							   <span>វឌីអូបង្រៀន</span>
 						 	</a>
-					  </li>  				
+					  </li>  
+					  	  
+					   <li>
+					  		<a class="menu" href="${pageContext.request.contextPath}/docs" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
+							   <span>ឯកសារ</span>
+						 	</a>
+					  </li>  
+					  
+					  <li>
+					  		<a class="menu" href="/cat/{{mainCat.CAT_ID}}?p={{mainCat.CAT_NAME}}" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
+							   <span>វេទិការ</span>
+						 	</a>
+					  </li> 
+					  
+					   <li>
+					  		<a class="menu" href="/cat/{{mainCat.CAT_ID}}?p={{mainCat.CAT_NAME}}" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
+							   <span>ព័ត៌មាន</span>
+						 	</a>
+					  </li> 
+					
+					  
+					 				
 				</ul>
 			</div> 
 		</div>

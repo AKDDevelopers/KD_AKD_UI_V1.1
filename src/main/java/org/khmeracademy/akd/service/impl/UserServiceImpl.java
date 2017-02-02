@@ -93,9 +93,10 @@ public class UserServiceImpl implements UserService{
 		
 		//TODO : Get user object by user hash from login.knongdai.com/knongdai/user/user-hash/{user-hash}
 		HttpEntity<Object> request = new HttpEntity<Object>(headers);
+		System.out.println(environment.getProperty("ACCOUNT.API.URL") + "/knongdai/user/user-hash/"+userHash);
 		ResponseEntity<Map> response = rest.exchange(environment.getProperty("ACCOUNT.API.URL") + "/knongdai/user/user-hash/"+userHash, HttpMethod.POST , request , Map.class);
 		Map<String, Object> map = (HashMap<String, Object>)response.getBody();
-		System.out.println("=====> "  + map.get("DATA"));
+		System.out.println("get user by user hash=====> "  + map.get("DATA"));
 		Map<String, Object> userMap = (Map<String, Object>) map.get("DATA");
 		
 		if(userMap != null){
