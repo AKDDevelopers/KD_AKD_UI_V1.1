@@ -197,7 +197,8 @@ window.fileName="";
 				<ul class="menu-basic nav" id="myTopnav">
 					<li class="icon">
 					   <span><i class="fa fa-bars" aria-hidden="true"></i></span>
-					 </li>			
+					 </li>	
+					 		
 					  <li>
 						  <a class="menu" href="/" ng-class="{'setActive':CURRENT_PAGE == ''}">
 							   <span><i class="fa fa-home" aria-hidden="true"></i>
