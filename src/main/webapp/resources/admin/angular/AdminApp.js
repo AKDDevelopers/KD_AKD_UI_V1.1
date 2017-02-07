@@ -1,8 +1,13 @@
 var app = angular.module('MainApp', []);
 
-var API_PATH = "http://localhost:1111";
-var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
+//var API_PATH = "http://localhost:1111";
+//var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
 //var API_PATH = "http://192.168.178.207:1111";
+
+var API_PATH = "http://docs-api.khmeracademy.org";
+var API_ACCESS_CONTROLLER_URL = "http://docs-api.khmeracademy.org/api/v1";
+
+
 
 // Main Controller for admin
 app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {

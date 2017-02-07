@@ -1,10 +1,16 @@
 
 var app = angular.module('UserApp', ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
 
-var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
-var API_PATH = "http://localhost:1111";
-var UI_PATH = "http://192.168.178.202:2222";
+//var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
+//var API_PATH = "http://localhost:1111";
+//var UI_PATH = "http://192.168.178.202:2222";
 
+var API_ACCESS_CONTROLLER_URL = "http://docs-api.khmeracademy.org/api/v1";
+var API_PATH = "http://docs-api.khmeracademy.org";
+var UI_PATH = "http://docs.khmeracademy.org";
+
+
+	
 $(function(){
 
 //	$("ul").on("click", "li", function(e) {

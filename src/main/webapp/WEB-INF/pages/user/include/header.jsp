@@ -163,7 +163,7 @@ window.fileName="";
 					</div>			    	
 		    	</span> 
             </sec:authorize>	
-		    <span id="partner"><jsp:include page="${pageContext.request.contextPath}/WEB-INF/pages/user/include/partner.jsp"></jsp:include></span>
+<%-- 		    <span id="partner"><jsp:include page="${pageContext.request.contextPath}/WEB-INF/pages/user/include/partner.jsp"></jsp:include></span> --%>
 		        <span class="upload-login-register">
 		        	<div class="user"> 
 						<div class="input-group">								
@@ -173,7 +173,7 @@ window.fileName="";
 							    </button>
 							    <sec:authorize access="isAnonymous()">
 							    	<a href="/login" class="btn btn-default">ចូលប្រើប្រាស់</a>
-							    	<a href="/register" class="btn btn-default">ចុះឈ្មោះ</a> 
+							    	<a href="http://login.khmeracademy.org/register" class="btn btn-default">ចុះឈ្មោះ</a> 
 							    </sec:authorize>
 						    </span>
 						</div>
@@ -206,25 +206,25 @@ window.fileName="";
 					  </li>	
 					  		
 					  <li>
-					  		<a class="menu" href="/cat/{{mainCat.CAT_ID}}?p={{mainCat.CAT_NAME}}" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
+					  		<a class="menu" href="http://khmeracademy.org/elearning"  ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span>វឌីអូបង្រៀន</span>
 						 	</a>
 					  </li>  
 					  	  
 					   <li>
-					  		<a class="menu" href="${pageContext.request.contextPath}/docs" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
+					  		<a class="menu" href="${pageContext.request.contextPath}/documents" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span>ឯកសារ</span>
 						 	</a>
 					  </li>  
 					  
 					  <li>
-					  		<a class="menu" href="/cat/{{mainCat.CAT_ID}}?p={{mainCat.CAT_NAME}}" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
+					  		<a class="menu" href="#forum" onclick="ifCookieExistLogin('http://forum.khmeracademy.org')" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span>វេទិការ</span>
 						 	</a>
 					  </li> 
 					  
 					   <li>
-					  		<a class="menu" href="/cat/{{mainCat.CAT_ID}}?p={{mainCat.CAT_NAME}}" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
+					  		<a class="menu" href="http://news.khmeracademy.org" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span>ព័ត៌មាន</span>
 						 	</a>
 					  </li> 

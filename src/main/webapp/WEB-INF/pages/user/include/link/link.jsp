@@ -29,3 +29,5 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/user/css/comment.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/user/css/register.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/user/css/save-list.css">
+
+<script type="text/javascript" src="http://login.khmeracademy.org/static/script/knongdai_login.js"></script>
