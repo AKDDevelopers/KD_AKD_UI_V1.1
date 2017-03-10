@@ -20,10 +20,10 @@ button.searchBtn
 
 <div class="searchBlock"> 
 	
-	<form action="#search" id="frmSearch">
+	<form action="/searchResult" id="frmSearch" method="GET">
 
 		<div class="input-group">	
-				<input type="text" class="form-control form-search"  id="keyword" placeholder="ស្វែងរក">
+				<input type="text" class="form-control form-search" name="keyword"  id="keyword" placeholder="ស្វែងរក">
 			   
 			    <span class="input-group-btn">	    	
 			    	<button class="btn btn-primary searchBtn">

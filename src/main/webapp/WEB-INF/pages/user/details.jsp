@@ -34,7 +34,7 @@
 		}
 		div.drive-viewer-popout-button drive-viewer-dark-button goog-inline-block drive-viewer-button
 		{
-			background-color: #003666 !importants;
+			background-color: #003666 !important;
 			display:none !important;
 			opacity:0;
 		}
@@ -255,7 +255,7 @@
 		    setHeight();
 		  }); 
 	</script>
-	
+
 	
  	<%@include file="include/script/script.jsp"%>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/user/js/savelist.js"></script> 		

@@ -1,17 +1,28 @@
 	var getCurrentPage = 1;
 	var totalPage = 0;
 	
-	var catID 		= ""; 
+	var catID 		= "";
+
 	var docTitle 	= ""; 
 	var page 		= 1; 
 	var limit 		= 12;
-	
+
+	console.log(keyword);
+
+    if(keyword != null || keyword  != ""){
+        docTitle = keyword;
+        console.log(1);
+        $("#keyword").val(keyword);
+    }else{
+        docTitle ="";
+        console.log(2);
+	}
 	
 	$(document).ready(function() {
     
 		showMainPageData = function(){ 
     		$.ajax({
-    			url :"http://localhost:1111/api/v1/get-categories",
+    			url :"http://docs-api.khmeracademy.org/api/v1/get-categories",
 				method: 'GET',
 				success:function(data){
 					console.log(data);
@@ -24,9 +35,10 @@
 			});	
     	};
     	
-    	getDocumentsByDocTitleOrCatID = function(catID , docTitle , page,  limit){ 
+    	getDocumentsByDocTitleOrCatID = function(catID , docTitle , page,  limit){
+    		console.log("Title : " + docTitle);
     		$.ajax({
-    			url :"http://localhost:1111/api/v1/get-documents-by-doc-title-or-cat-id?cat-id="+catID+"&doc-title="+docTitle+"&page="+page+"&limit="+limit,
+    			url :"http://docs-api.khmeracademy.org/api/v1/get-documents-by-doc-title-or-cat-id?cat-id="+catID+"&doc-title="+docTitle+"&page="+page+"&limit="+limit,
 				method: 'GET',
 				success:function(data){
 					console.log(data);
@@ -71,7 +83,7 @@
     	});
     	
     	
-    	getDocumentsByDocTitleOrCatID("" , "" , page,  limit);
+    	getDocumentsByDocTitleOrCatID("" , docTitle , page,  limit);
     	showMainPageData();
        	
 	});

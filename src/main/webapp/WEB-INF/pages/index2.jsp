@@ -110,7 +110,7 @@
 	</footer>
 	
 	<%@include file="user/include/script/script.jsp"%>
-	
+	<script>var keyword = "";</script>
 	<!-- jQuery Template -->
 	<script src="${pageContext.request.contextPath}/resources/myscript/getDoumentsByTitleOrCatID.js"></script>
 	<script src="${pageContext.request.contextPath}/resources/myscript/jquery.tmpl.min.js"></script>

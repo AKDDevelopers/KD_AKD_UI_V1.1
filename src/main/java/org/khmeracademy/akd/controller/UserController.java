@@ -3,13 +3,18 @@ package org.khmeracademy.akd.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
+import java.util.Map;
 
 
 @Controller
@@ -20,6 +25,11 @@ public class UserController {
 	
 	@Autowired
 	private String REGISTER_URL;
+	@Autowired
+	private RestTemplate restTemplate;
+	@Autowired
+	private HttpHeaders header;
+
 	
 	@RequestMapping(value={"/","/documents"},method=RequestMethod.GET)
 	public String index(){
@@ -68,6 +78,25 @@ public class UserController {
 		model.put("PAGE_TITLE", menuName);
 		return "user/view-by-category";
 	}
-	
+
+	// search result
+	@RequestMapping(value="/searchResult",method = RequestMethod.GET)
+	public String searchResult(@RequestParam("keyword") String keyword, ModelMap model){
+		//System.out.println("ID==>" + id);
+		HttpEntity<Object> request = new HttpEntity<Object>(header);
+		ResponseEntity<Map> response = restTemplate.exchange("http://docs-api.khmeracademy.org/api/v1/get-documents-by-doc-title-or-cat-id", HttpMethod.GET, request , Map.class) ;
+		System.out.print("RESPONSE BODY=> "+response.getBody().get("DATA"));
+
+
+		model.put("keyword", keyword);
+	//	model.put("RESULTS",response.getBody().get("DATA"));
+    // return search page
+		return "search";
+	}
+
+
+
+
+
 }
 
