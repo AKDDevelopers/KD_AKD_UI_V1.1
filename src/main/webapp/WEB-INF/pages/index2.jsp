@@ -86,6 +86,9 @@
 							 		
 							 		</div>
 							 		
+							 	<div style="padding:20px;display:none" id="oopSearch">
+							 		<h1>No results for : </h1> <h3>Please try another search.</h3>
+							 	</div>
 								
 								
 								

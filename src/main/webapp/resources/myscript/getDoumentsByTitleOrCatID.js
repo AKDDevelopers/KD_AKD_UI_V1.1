@@ -11,11 +11,11 @@
 
     if(keyword != null || keyword  != ""){
         docTitle = keyword;
-        console.log(1);
+//        console.log(1);
         $("#keyword").val(keyword);
     }else{
         docTitle ="";
-        console.log(2);
+//        console.log(2);
 	}
 	
 	$(document).ready(function() {
@@ -42,7 +42,8 @@
 				method: 'GET',
 				success:function(data){
 					console.log(data);
-					if(data.STATUS == true ){
+					if(data.DATA.length > 0 ){
+						$("#oopSearch").hide();
 						//$("#getDocuments").empty();
 						$("#documents_tmpl").tmpl(data.DATA).appendTo("#getDocuments");
 						
@@ -51,7 +52,11 @@
 						}else{
 							$("#btnLoadMore").show();
 						}
+					}else{
+						$("#oopSearch").show();
+						$("#btnLoadMore").hide();
 					}
+				
 					
 					$("#docLoading").hide();
 					
@@ -63,7 +68,8 @@
 			page++;
 			$("#btnLoadMore").hide();
 			$("#docLoading").show();
-			getDocumentsByDocTitleOrCatID(catID , docTitle , page,  8);
+//			alert($("#keyword").val());
+			getDocumentsByDocTitleOrCatID(catID , $("#keyword").val() , page,  8);
 		});
     	
     	$(document).on('click',".listByMainCategory" , function(){  
@@ -71,7 +77,7 @@
     		$("#docLoading").show();
 			page = 1;
 			catID = $(this).data("id");
-			getDocumentsByDocTitleOrCatID(catID , docTitle , page,  12 ); 
+			getDocumentsByDocTitleOrCatID(catID , $("#keyword").val() , page,  12 ); 
 			$(".getTextMain").text($(this).text());
 		});
     	
@@ -79,6 +85,7 @@
     		event.preventDefault();
     		$("#docLoading").show();
     		$("#getDocuments").empty();
+//    		alert($("#keyword").val());
     		getDocumentsByDocTitleOrCatID(catID , $("#keyword").val() , page,  12 ); 
     	});
     	
