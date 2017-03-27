@@ -1,9 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="ContextPath" value="http://localhost:2222" />
 <%@taglib prefix='sec' uri="http://www.springframework.org/security/tags" %>
+
 
 <!-- Dynamic navigation -->
 
@@ -15,7 +16,7 @@
     margin-right: 100px;
 }
 .activeNav{
-	
+
 	*color:black;
 }
 .activeNav a{
@@ -43,7 +44,7 @@ img.userProfile
 }
 #partner
 {
-	
+
 }
 
 .user
@@ -90,7 +91,7 @@ ul.dropdown-menu.dropdown-item::before{
     border-bottom-color:white;
     z-index: 2;
     display:block;
-    
+
 }
 ul.dropdown-menu.dropdown-item::after{
     content: "";
@@ -111,14 +112,14 @@ ul.dropdown-menu.dropdown-item::after{
 <sec:authorize access="isAuthenticated()">
    <sec:authentication  property="principal.userID" var="userID"/>
    <sec:authentication  property="principal.name" var="userName"/>
-   <sec:authentication  property="principal.email" var="userEmail"/> 
-   <sec:authentication  property="principal.profile" var="userProfile"/>         
+   <sec:authentication  property="principal.email" var="userEmail"/>
+   <sec:authentication  property="principal.profile" var="userProfile"/>
    <div ng-init="getUserByID()"></div>
 </sec:authorize>
 
 
 <script>
-window.userID = "${userID}"; 
+window.userID = "${userID}";
 window.CURRENT_PAGE = "${ParentID}";
 window.fileName="";
 
@@ -131,20 +132,20 @@ window.fileName="";
 <div class="top-menu" ng-init="getUserID(memIdAngular)">
 	<nav class="navbar navbar-inverse navbar-fixed-top navbar-bg">
 		<span class="navbar-logo">
-			<a href="/" class="navbar-brand# brand-logo"> 
-				<img alt="Logo" data-ng-src="${pageContext.request.contextPath}/resources/user/img/logo-4.png"/>					 
-			 </a>					
-		</span>		
+			<a href="/" class="navbar-brand# brand-logo">
+				<img alt="Logo" data-ng-src="${pageContext.request.contextPath}/resources/user/img/logo-4.png"/>
+			 </a>
+		</span>
 		<div class="container">
 			<div class="row">
-		 	<span><jsp:include page="${pageContext.request.contextPath}/WEB-INF/pages/user/include/search.jsp"></jsp:include></span> 	
+		 	<span><jsp:include page="${pageContext.request.contextPath}/WEB-INF/pages/user/include/search.jsp"></jsp:include></span>
 		 	<sec:authorize access="isAuthenticated()">
 		    	<span class="account">
-					<div class="collapse navbar-collapse" id="userAccount"​>  
-					  <ul class="nav navbar-nav navbar-right">	
+					<div class="collapse navbar-collapse" id="userAccount"​>
+					  <ul class="nav navbar-nav navbar-right">
 						<li class="dropdown">
 						  <a href="/profile" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-						  	<img alt="" data-ng-src="{{userInfoByUserID.PROFILE}}" class="userProfile">						  	
+						  	<img alt="" data-ng-src="{{userInfoByUserID.PROFILE}}" class="userProfile">
 						  </a>
 						  <ul class="dropdown-menu dropdown-item">
 								<li>
@@ -153,33 +154,33 @@ window.fileName="";
 									</a>
 								</li>
 								<li>
-									<a href="/logout">
+									<a href="/logout" id="logOut">
 										<span>ចាកចេញ</span>
 									</a>
-								</li>			
+								</li>
 						  </ul>
 						</li>
 					  </ul>
-					</div>			    	
-		    	</span> 
-            </sec:authorize>	
+					</div>
+		    	</span>
+            </sec:authorize>
 <%-- 		    <span id="partner"><jsp:include page="${pageContext.request.contextPath}/WEB-INF/pages/user/include/partner.jsp"></jsp:include></span> --%>
 		        <span class="upload-login-register">
-		        	<div class="user"> 
-						<div class="input-group">								
-						    <span class="input-group-btn">	   	
+		        	<div class="user">
+						<div class="input-group">
+						    <span class="input-group-btn">
 							    <button class="btn btn-primary" data-toggle="modal"  ng-click="checkBeforeUpload()">
 							    	ចែកចាយឯកសារ
 							    </button>
 							    <sec:authorize access="isAnonymous()">
 							    	<a href="/login" class="btn btn-default">ចូលប្រើប្រាស់</a>
-							    	<a href="http://login.khmeracademy.org/register" class="btn btn-default">ចុះឈ្មោះ</a> 
+							    	<a href="http://login.khmeracademy.org/register?continue-site=http://docs.khmeracademy.org" class="btn btn-default">ចុះឈ្មោះ</a>
 							    </sec:authorize>
 						    </span>
 						</div>
 					</div>
-		        </span> 
-			</div>				
+		        </span>
+			</div>
 		</div>
 	</nav>
 </div>
@@ -197,43 +198,65 @@ window.fileName="";
 				<ul class="menu-basic nav" id="myTopnav">
 					<li class="icon">
 					   <span><i class="fa fa-bars" aria-hidden="true"></i></span>
-					 </li>	
-					 		
+					 </li>
+
 					  <li>
 						  <a class="menu" href="/" ng-class="{'setActive':CURRENT_PAGE == ''}">
 							   <span><i class="fa fa-home" aria-hidden="true"></i>
 							   </span>ទំព័រដើម
 						  </a>
-					  </li>	
-					  		
+					  </li>
+
 					  <li>
 					  		<a class="menu" href="http://khmeracademy.org/elearning"  ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span>វឌីអូបង្រៀន</span>
 						 	</a>
-					  </li>  
-					  	  
+					  </li>
+
 					   <li>
 					  		<a class="menu" href="${pageContext.request.contextPath}/documents" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span>ឯកសារ</span>
 						 	</a>
-					  </li>  
-					  
+					  </li>
+
 					  <li>
 					  		<a class="menu" href="#forum" onclick="ifCookieExistLogin('http://forum.khmeracademy.org')" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span>វេទិការ</span>
 						 	</a>
-					  </li> 
-					  
+					  </li>
+
 					   <li>
 					  		<a class="menu" href="http://news.khmeracademy.org" ng-class="{'setActive':CURRENT_PAGE == mainCat.CAT_ID}" name="mainMenu">
 							   <span>ព័ត៌មាន</span>
 						 	</a>
-					  </li> 
-					
-					  
-					 				
+					  </li>
+
+
+
 				</ul>
-			</div> 
+			</div>
 		</div>
 	</nav>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+<script>
+
+//	$("#logOut").click(function(){
+////        $.cookie('KD_USER_HASH',null, {domain:'.khmeracademy.org'})
+//        document.cookie = 'KD_USER_HASH=; path=/; domain=.example.com; expires=' + new Date(0).toUTCString();
+//	})
+</script>
+<%-- Check KA authenication--%>
+
+<script type="text/javascript" src="http://login.khmeracademy.org/static/script/knongdai_login.js"></script>
+<sec:authorize access="isAnonymous()">
+	<script type="text/javascript">
+        isAnonymous("http://docs.khmeracademy.org/");
+	</script>
+</sec:authorize>
+
+<%--<sec:authorize access="isAuthenticated()">--%>
+	<%--<script type="text/javascript">--%>
+        <%--isAuthenticated("http://docs.khmeracademy.org/");--%>
+	<%--</script>--%>
+<%--</sec:authorize>--%>

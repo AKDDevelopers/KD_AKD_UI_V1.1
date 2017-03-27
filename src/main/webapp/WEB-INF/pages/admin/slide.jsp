@@ -74,12 +74,26 @@ window.userID = "${userID}";
 							</div>
 							<div style="clear: both;"></div>
 							<br><br>
-
-
+							<%--TODO: Search--%>
+							<div class="alert alert-info">
+								<p>Sort Type: {{ sortType }}</p>
+								<p>Sort Reverse: {{ sortReverse }}</p>
+								<p>Search Query: {{ searchFish }}</p>
+							</div>
+							<form>
+								<div class="form-group">
+									<div class="input-group">
+										<div class="input-group-addon"><i class="fa fa-search"></i></div>
+										<input type="text" class="form-control" placeholder="Search da Fish" ng-model="searchFish">
+									</div>
+								</div>
+							</form>
+						<%----%>
 							<table id="example1" class="table table-bordered table-striped">
 								<thead>
 									<tr>
 										<th>#</th>
+
 										<th>Title</th>
 										<th>Posted By</th>
 										<th>Posted Date</th>
@@ -90,7 +104,7 @@ window.userID = "${userID}";
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="d in document" ng-init="rowNumber= 10">
+									<tr ng-repeat="d in document | filter:searchFish" ng-init="rowNumber= 10">
 										<td>{{($index + ((filter.page - 1) * rowNumber)) + 1}}</td>
 										<td>{{d.TITLE | strLimit: 22}}</td>
 										<td>{{d.USERS[0].USER_NAME | strLimit: 22}}</td>

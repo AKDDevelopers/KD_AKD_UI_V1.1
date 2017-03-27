@@ -5,8 +5,9 @@
   <section class="sidebar">
     <!-- Sidebar user panel -->
     <div class="user-panel">
+
       <span class="pull-left# image profile" >
-      	<img data-ng-src="{{API_PATH_ANGULAR}}/resources/img/user-profile/{{userInfoByUserID.PROFILE}}" class="img-circle" alt="User Image">
+      	<img data-ng-src="{{userInfoByUserID.PROFILE}}" class="img-circle" alt="User Image">
       </span>
       <br><br>
       <div >

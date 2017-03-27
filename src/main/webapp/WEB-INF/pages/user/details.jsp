@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Document Detail</title>
+	<title>Document Detail | All Khmer Docs</title>
 	<%@include file="include/link/link.jsp"%>
 	
 	<style>
@@ -114,7 +114,7 @@
 													</div>
 													<div id="owner">
 														<span id="img-user">
-															<img data-ng-src="{{API_PATH_ANGULAR}}/resources/img/user-profile/{{docDetail[0].USERS[0].PROFILE}}" alt="">
+															<img data-ng-src="{{docDetail[0].USERS[0].PROFILE}}" alt="">
 														</span>
 														 {{docDetail[0].USERS[0].USER_NAME}}														
 														<input type="text" value={{docDetail[0].THUMBNAIL_URL}} id="thubnail" ng-show="false">													
@@ -139,7 +139,7 @@
 															<span><i class="fa fa-plus" aria-hidden="true"  ></i>បន្ថែមទៅបញ្ជី</span>
 														</button>		
 													
-														<button class="btn-share-detail" id="shareBtn" ng-click="FBShare(docDetail[0].DOC_ID,docDetail[0].THUMBNAIL_URL)">
+														<button class="btn-share-detail" id="shareBtn" ng-click="FBShare(docDetail[0].DOC_ID,docDetail[0].THUMBNAIL_URL,docDetail[0].TITLE,docDetail[0].DES)">
 															<span​ class="shareIcon"><i class="fa fa-share-alt" aria-hidden="true"></i></span>
 															ចែករំលែក
 														</button>
@@ -218,9 +218,10 @@
 												<div id="category">ប្រភេទកញ្ចប់: {{docDetail[0].CATEGORY[0].CAT_NAME}}</div>
 												<hr>
 												<div id="description">ការរៀបរាប់បន្ថែម: 
-													<div>
-														{{docDetail[0].DES}}
+													<div ng-show='docDetail[0].DES !== undefined'>
+														{{docDetail[0].DES==undefined?docDetail[0].DES:"No description"}}
 													</div>
+
 												</div>
 											</div>
 											<div class="commend-visitor">

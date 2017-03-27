@@ -24,7 +24,7 @@
 								{{related.USERS[0].USER_NAME | strLimit: 30}}
 							</div>
 							<div id="Des">
-								{{related.DES | strLimit: 30}}
+								{{related.DES == undefined?related.DES:"No description"| strLimit: 30}}
 							</div>
 						</div>
 					</div>

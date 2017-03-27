@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>ទំព័រដើម 2</title>
+<title>ទំព័រដើម | All Khmer Docs</title>
 <%@include file="user/include/link/link.jsp"%>
 
 <link href="${pageContext.request.contextPath}/resources/vertical-menu.css" rel="stylesheet">

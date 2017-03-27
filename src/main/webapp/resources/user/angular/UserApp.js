@@ -1,11 +1,12 @@
 
 var app = angular.module('UserApp', ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
 
-//var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
-//var API_PATH = "http://localhost:1111";
-//var UI_PATH = "http://192.168.178.202:2222";
-
-var API_ACCESS_CONTROLLER_URL = "http://docs-api.khmeracademy.org/api/v1";
+var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
+var API_SOCKET_URL = 'http://localhost:11223'
+// var API_PATH = "http://localhost:1111";
+// var UI_PATH = "http://192.168.178.202:2222";
+//
+// var API_ACCESS_CONTROLLER_URL = "http://docs-api.khmeracademy.org/api/v1";
 var API_PATH = "http://docs-api.khmeracademy.org";
 var UI_PATH = "http://docs.khmeracademy.org";
 
@@ -14,6 +15,7 @@ var UI_PATH = "http://docs.khmeracademy.org";
 $(function(){
 
 //	$("ul").on("click", "li", function(e) {
+//		$(this).children('ul').slideToggle();
 //		$(this).children('ul').slideToggle();
 //		angular.element('#userCtrl').scope().getAllDocumentByCatID($rootScope.currentSubCategory);
 //        console.log("clicked");
@@ -205,24 +207,46 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
     ///////////////////		START COMMENT BLOCK	/////////////////
 
-
+    $scope.getDatetime = new Date();
     $rootScope.UserID=$window.userID;
 
     $scope.getAllCommentByDocID=function(DocID){
+    console.log("getAllCommentByDocID=> ",DocID)
+
+        // $http({
+        //     url:API_ACCESS_CONTROLLER_URL + '/getAllCommentByDocID/'+DocID,
+        //     method:'GET'
+        // }).then(function(response){
+        //     $scope.commentByDoc=response.data.DATA;
+        // }, function(response){
+        //
+        // });
+
+        var url = API_SOCKET_URL
+        var socketServerUrl = url
+        console.log(socketServerUrl)
+        var commentNsp = socketServerUrl + '/comment'
+        var socket = io.connect(commentNsp);
+        socket.on('connect',function(){
+            socket.emit('all comments', DocID,function(){
+
+            })
+        })
+
+        socket.on('all comments', function(comments){
+            console.log('comments=> ', comments)
+            $scope.commentByDoc = comments
+            $scope.countComment = comments.length;
+            console.log($scope.commentByDoc)
+        })
 
 
-        $http({
-            url:API_ACCESS_CONTROLLER_URL + '/getAllCommentByDocID/'+DocID,
-            method:'GET'
-        }).then(function(response){
-            $scope.commentByDoc=response.data.DATA;
-        }, function(response){
 
-        });
+
+
 
     }
-
-
+    // INSERT COMMENT
 
     $scope.insertComment = function(){
         if($rootScope.UserID==0 || $rootScope.UserID==null ||$rootScope.UserID =="")
@@ -249,6 +273,32 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             });
         }
 
+    }
+    // DELETE COMMENT
+    $scope.deleteComment = function(){
+        if($rootScope.UserID==0 || $rootScope.UserID==null ||$rootScope.UserID =="")
+        {
+            location.href= "/login";
+        }else{
+
+            $http({
+                url:API_ACCESS_CONTROLLER_URL + '/comment',
+                method:'PUT',
+                data:{
+                    "CREATED_DATE": new Date(),
+                    "DOC_ID": $scope.currentDocumentID,
+                    "REMARK": $scope.newComment,
+                    "STATUS": 1,
+                    "USER_ID": $rootScope.UserID
+                }
+
+            }).then(function(response){
+                $scope.getAllCommentByDocID($scope.currentDocumentID);
+                $scope.newComment="";
+            }, function(response){
+                alert("Error");
+            });
+        }
     }
 
 
@@ -404,14 +454,14 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             $scope.docDetail=response.data.DATA;
 
             //console.log($scope.docDetail[0].USERS.USER_ID);
-
+            console.log("DOC DETAIL",$scope.docDetail);
             $scope.commentByDocID=response.data.DATA[0].COMMENT;
             $rootScope.currentSubCategory=response.data.DATA[0].CAT_ID;
             $scope.currentDocumentID=DocID;
 
             $scope.getAllCommentByDocID(DocID);
-            //$scope.getAllDocumentByCatID($rootScope.currentSubCategory);
-            //console.log("CatID: " + $rootScope.currentSubCategory);
+            $scope.getAllDocumentByCatID($rootScope.currentSubCategory);
+            console.log("CatID: " + $rootScope.currentSubCategory);
             $scope.getAllDocumentByCatIDAndUserID($rootScope.currentSubCategory, $scope.docDetail[0].USERS.USER_ID);
         }, function(response){
 
@@ -1456,6 +1506,9 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             var file = $('#singleUploadDocument')[0].files[0];
             frmData.append("files", file);
             frmData.append("title", $scope.theFile.name);
+            if($scope.des==""||$scope.des==null){
+                $scope.des = "";
+            }
             frmData.append("des", $scope.des);
             frmData.append("usreID", $rootScope.userID);
             frmData.append("catID", $scope.catID);
@@ -1567,19 +1620,55 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         });
     };
 
-
+/*
     // SHARE TO FACEBOOK
+    <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/km_KH/sdk.js#xfbml=1&version=v2.7&appId=776306919082812";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
-    $scope.FBShare = function(docID,thumbnail) {
+
+    <!-- Your share button code -->
+    <div id="share_button"> Share </div>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $('#share_button').click(function(e){
+                e.preventDefault();
+                FB.ui(
+                    {
+                        method: 'feed',
+                        name: 'Testing',
+                        link: 'http://www.khmeracademy.org/',
+                        picture: 'http://www.khmeracademy.org/resources/assets/img/banner/4th.jpg',
+                        caption: 'Test',
+                        description: 'Test',
+                        message: 'Test'
+                    });
+            });
+        });
+    </script>
+        */
+
+
+    $scope.FBShare = function(docID,thumbnail,title,desc) {
         var url = UI_PATH + '/' + window.location.pathname;
-
+        console.log(url);
+        var description = desc==undefined?desc:"No description"
         FB.ui({
-            method: 'share',
+            method: 'feed',
+            name:title,
+            link:'http://docs.khmeracademy.org/detail/'+docID,
             display: 'popup',
-            caption: 'TESTING',
-            href:  url ,
+            caption: 'All Khmer Docs',
+            // href:  url ,
             picture: thumbnail,
-
+            description:description
         }, function(response){
             if (response && !response.error_code) {
 				/*status = 'success';

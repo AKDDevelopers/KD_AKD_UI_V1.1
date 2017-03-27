@@ -30,4 +30,10 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/user/css/register.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/user/css/save-list.css">
 
-<script type="text/javascript" src="http://login.khmeracademy.org/static/script/knongdai_login.js"></script>
+<script src="${pageContext.request.contextPath}/resources/plugins/jQuery/jquery.min.js"></script>
+
+
+<%--Google Analytic--%>
+<script src="${pageContext.request.contextPath}/resources/user/js/googleAnalytic.js"></script>
+<%--SocketIO Client JS--%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.7.3/socket.io.js"></script>

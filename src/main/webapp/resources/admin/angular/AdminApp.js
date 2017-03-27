@@ -515,6 +515,10 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 
 		frmData.append("usreID", $rootScope.userID);
 		frmData.append("catID", $scope.catID);
+		console.log("upload calling..")
+		if($scope.des==""||$scope.des==null){
+			$scope.desc = "";
+		}
 		frmData.append("des", $scope.des);
 
 		if($scope.uploadOption == 'Single'){
@@ -624,6 +628,10 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 
 	$rootScope.currentStatus="";
 
+    $scope.sortType     = 'name'; // set the default sort type
+    $scope.sortReverse  = false;  // set the default sort order
+    $scope.searchFish   = '';     // set the default search/filter term
+
 	$scope.getDocumentByStatus = function(status) {
 		$rootScope.currentStatus = status;
 		$scope.getTotalDocumentByStatus($rootScope.currentStatus);
@@ -634,6 +642,7 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 		}).then(function(response) {
 
 			$scope.document = response.data.DATA;
+
 
 			if(response.data.PAGING != null){
 				$rootScope.currentTotalPage = response.data.PAGING.TOTAL_PAGES;

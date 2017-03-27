@@ -52,7 +52,7 @@ footer { background-color:#0c1a1e; min-height:350px; font-family: 'Open Sans', s
       <h6 class="heading7">អំពីយើង</h6>
      
        <div class="logofooter">
-       	<img src="http://localhost:2222/resources/user/img/AKD.png" class="img" width="50" height="50" style="" />
+       	<img src="${pageContext.request.contextPath}/resources/user/img/AKD.png" class="img" width="50" height="50" style="" />
         <span style="font-size:20px">All Khmer Docs</span>
         </div>
         <p>

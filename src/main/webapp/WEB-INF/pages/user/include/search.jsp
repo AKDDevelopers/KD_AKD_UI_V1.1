@@ -34,3 +34,11 @@ button.searchBtn
 	
 	</form>
 </div>
+<script>
+//	$(function(){
+//	    console.log("jquery work!");
+//	    $("#frmSearch").submit(function(){
+//	        location.href =
+//		})
+//	})
+</script>
