@@ -1,35 +1,20 @@
 
+// TODO: URL DECLARATION BLOCK
 var app = angular.module('UserApp', ['ngAnimate', 'ngSanitize', 'ui.bootstrap']);
 
-var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
-var API_SOCKET_URL = 'http://localhost:11223'
+// var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
+// var API_SOCKET_URL = 'http://localhost:11223'
 // var API_PATH = "http://localhost:1111";
 // var UI_PATH = "http://192.168.178.202:2222";
 //
-// var API_ACCESS_CONTROLLER_URL = "http://docs-api.khmeracademy.org/api/v1";
+var API_ACCESS_CONTROLLER_URL = "http://docs-api.khmeracademy.org/api/v1";
 var API_PATH = "http://docs-api.khmeracademy.org";
 var UI_PATH = "http://docs.khmeracademy.org";
-
-
-	
-$(function(){
-
-//	$("ul").on("click", "li", function(e) {
-//		$(this).children('ul').slideToggle();
-//		$(this).children('ul').slideToggle();
-//		angular.element('#userCtrl').scope().getAllDocumentByCatID($rootScope.currentSubCategory);
-//        console.log("clicked");
-//        e.stopPropagation();
-//
-//
-//     });
-
-});
+var API_SOCKET_URL = 'http://docs-api.khmeracademy.org:11225'
 
 
 
-
-///////////////////		START MAIN CONTROLLLER FOR USER BLOCK	/////////////////
+//TODO: INITIALIZED USER CONTROLLER APP
 app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$window', function($scope,$rootScope,$http,$location,$sce,$window){	//$rootScope, $scope, $http, $location, $localStorage, loginService
     $rootScope.currentSubCategory="currentSubCategory";
     $scope.currentMainCategory="";
@@ -39,8 +24,9 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
     $rootScope.API_PATH_ANGULAR = API_PATH;	// USE IT FOR SET IMAGE URL IN WEB PAGE.
     $rootScope.errorImage = API_PATH + "/resources/img/doc-thumbnail/no-image-available.png";
     $rootScope.errorImage2 = API_PATH + "/resources/img/doc-thumbnail/no-image-found.jpg";
+    $rootScope.commentID = $window.commentID;
 
-
+    // console.log("WINDOW OBJECT", $window.userID)
     $scope.partners = [
         {
             "SITE_URL"	: "http://localhost:2222",
@@ -72,7 +58,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
 
-    ////////////////////START SEARCH BLOCK	/////////////////
+
+  //TODO: SEARCH BLOCK
     var _selected;
     $scope.selected = undefined;
 
@@ -107,6 +94,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
     }
+
+    // TODO: GET DOCUMENT BY LIKE
     $scope.getDocumentByLikeTitle = function(title){
         $http({
             url:API_ACCESS_CONTROLLER_URL + '/getDocumentByLikeTitle/'+title,
@@ -125,12 +114,15 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         });
     }
 
-    //////////////////// END SEARCH BLOCK	/////////////////
 
 
 
-    ////////////////////	START CATEGORY BLOCK	/////////////////
 
+
+
+ // TODO: CATEGORY BLOCK
+
+    //TODO: GET ALL CATEGORY
 
     $scope.getAllCategory = function(){
         if(!$scope.checkUserLogin()){
@@ -151,6 +143,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         }
     }
 
+    //TODO: GETCATEGORY  BY PARENT ID
     $scope.getCategoryByParentID=function(parentID){
         $scope.getCategoryByID(parentID);
         $http({
@@ -164,8 +157,9 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
         });
     }
-    //	-----------------Get All Category and Subcategory-----------------------
 
+
+    //TODO: GET ALL CATEGORY AND RELATED SUB-CATEGORY
     $scope.getAllCategoryAndSubcategory=function(){
         $http({
             url:API_ACCESS_CONTROLLER_URL + '/getCategoryByParentID/0',
@@ -178,6 +172,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
     }
     $scope.getAllCategoryAndSubcategory();
 
+    //TODO: GET CATEGORY BY ID
     $scope.getCategoryByID=function(CatID){
         $http({
             url:API_ACCESS_CONTROLLER_URL + '/category/'+CatID,
@@ -189,44 +184,29 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         });
     }
 
-    //	GET MAIN CATEGORY
-	/*$scope.getMainCategory=function(parentID){
-	 $http({
-	 url:API_ACCESS_CONTROLLER_URL + '/getCategoryByParentIDAndStatusEnable/0',
-	 method:'GET'
-	 }).then(function(response){
-	 $scope.mainCategory=response.data.DATA;
 
-	 }, function(response){
+//TODO: COMMENT BLOCK
 
-	 });
-	 }*/
-
-
-    ////////////////////	END CATEGORY BLOCK	/////////////////
-
-    ///////////////////		START COMMENT BLOCK	/////////////////
 
     $scope.getDatetime = new Date();
     $rootScope.UserID=$window.userID;
 
+
+
+
+
+    //TODO: RETRIEVE COMMENTS BASED ON DOCUMENT ID
     $scope.getAllCommentByDocID=function(DocID){
-    console.log("getAllCommentByDocID=> ",DocID)
 
-        // $http({
-        //     url:API_ACCESS_CONTROLLER_URL + '/getAllCommentByDocID/'+DocID,
-        //     method:'GET'
-        // }).then(function(response){
-        //     $scope.commentByDoc=response.data.DATA;
-        // }, function(response){
-        //
-        // });
-
+        //TODO: SOCKET IO URL DECLARATION
         var url = API_SOCKET_URL
         var socketServerUrl = url
         console.log(socketServerUrl)
         var commentNsp = socketServerUrl + '/comment'
         var socket = io.connect(commentNsp);
+    console.log("getAllCommentByDocID=> ",DocID)
+
+
         socket.on('connect',function(){
             socket.emit('all comments', DocID,function(){
 
@@ -246,71 +226,134 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
     }
-    // INSERT COMMENT
+
+    //TODO: INSERT NEW COMMENT BASED ON USER
 
     $scope.insertComment = function(){
+        var url = API_SOCKET_URL
+        var socketServerUrl = url
+        console.log(socketServerUrl)
+        var commentNsp = socketServerUrl + '/comment'
+        var socket = io.connect(commentNsp);
+
         if($rootScope.UserID==0 || $rootScope.UserID==null ||$rootScope.UserID =="")
         {
             location.href= "/login";
         }else{
 
-            $http({
-                url:API_ACCESS_CONTROLLER_URL + '/comment',
-                method:'POST',
-                data:{
-                    "CREATED_DATE": new Date(),
-                    "DOC_ID": $scope.currentDocumentID,
-                    "REMARK": $scope.newComment,
-                    "STATUS": 1,
-                    "USER_ID": $rootScope.UserID
+        //    var commentRemark = angular.element('#commentRemark').text()
+            var commentData = {
+                // "COMMENT_ID":$scope.commentID,
+                "CREATED_DATE": new Date(),
+                "DOC_ID": $scope.currentDocumentID,
+                "REMARK": $scope.newComment,
+                "STATUS": 1,
+                "USER_ID": $rootScope.UserID,
+                "USERS":{
+                    "PROFILE": $scope.userInfoByUserID.PROFILE,
+                    "USER_NAME":$scope.userInfoByUserID.USER_NAME
                 }
+            }
 
-            }).then(function(response){
-                $scope.getAllCommentByDocID($scope.currentDocumentID);
-                $scope.newComment="";
-            }, function(response){
-                alert("Error");
-            });
+            socket.on('connect',function(){
+                socket.emit('new comment', commentData,function(){
+                    console.log('onNew comment=>', commentData)
+
+                })
+            })
+
+
+
         }
 
+        socket.on('new comment', function(newComment){
+            // console.log('new comments=> ', newComment)
+            // $scope.newComment = newComment
+            // console.log("new comment= >",newComment)
+            //$scope.newComment = newComment
+
+            // $scope.commentByDoc.unshift(newComment)
+            console.log("NEW COMMENT FROM SERVER", newComment)
+
+            // newComment["USERS"]={
+            //     "PROFILE":$scope.userInfoByUserID.PROFILE,
+            //     "USER_NAME":$scope.userInfoByUserID.USER_NAME
+            // }
+
+            console.log("allcomment=> ",$scope.commentByDoc)
+            // $scope.newComment = newComment
+            //  console.log($scope.commentByDoc)
+
+        })
+        console.log(commentData)
+        $scope.commentByDoc.unshift(commentData)
+        $scope.newComment = ""
+
     }
-    // DELETE COMMENT
+
+    //TODO: DELETE COMMENT BASED ON USER
+
     $scope.deleteComment = function(){
+        var url = API_SOCKET_URL
+        var socketServerUrl = url
+        console.log(socketServerUrl)
+        var commentNsp = socketServerUrl + '/comment'
+        var socket = io.connect(commentNsp);
+        $scope.commentID = angular.element('.commentBox').attr("id")
+        console.log("comment id", $scope.commentID)
+
         if($rootScope.UserID==0 || $rootScope.UserID==null ||$rootScope.UserID =="")
         {
             location.href= "/login";
         }else{
 
-            $http({
-                url:API_ACCESS_CONTROLLER_URL + '/comment',
-                method:'PUT',
-                data:{
-                    "CREATED_DATE": new Date(),
-                    "DOC_ID": $scope.currentDocumentID,
-                    "REMARK": $scope.newComment,
-                    "STATUS": 1,
-                    "USER_ID": $rootScope.UserID
-                }
+            socket.on('connect',function(){
 
-            }).then(function(response){
-                $scope.getAllCommentByDocID($scope.currentDocumentID);
-                $scope.newComment="";
-            }, function(response){
-                alert("Error");
-            });
+            })
+
+
+            var commentData = {"COMMENT_ID": $scope.commentID , "USER_ID":$rootScope.UserID}
+
+
+            socket.emit('remove comment',commentData,function(){
+                console.log('comment to be removed=> ', commentData)
+                angular.element("#listCommentBox").first().remove()
+                // $scope.countComment = commentData.length;
+
+
+            })
+
+            socket.on('removed comment',function(commentId){
+                console.log("Removed comment")
+                // $scope.getAllCommentByDocID($scope.docID)
+                // $scope.commentByDoc.shift(commentData)
+              //  angular.element("#listCommentBox").first().remove()
+             //   angular.element(".listCommentBox").first().remove();
+                socket.on('all comments', function(comments){
+                    console.log('comments=> ', comments)
+                    $scope.commentByDoc = comments
+                    $scope.countComment = comments.length;
+                    console.log($scope.commentByDoc)
+                })
+
+
+            })
+
+
+
+
         }
+
+
+
     }
 
-
-
-    ///////////////////		END COMMENT BLOCK	/////////////////
-
-    ///////////////////		START DOCUMENT BLOCK	/////////////////
+//TODO: DOCUMENT BLOCK
 
     $scope.showRecomment=false;
     $scope.showNewPost=false;
     $scope.showPopular=false;
-
+    //TODO: GET POPULAR DOCUMENT
     $scope.getDocumentByPopular=function(){
         $scope.showRecomment=false;
         $scope.showNewPost=false;
@@ -335,7 +378,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         page: 1,
         limit: 20
     };
-
+    //TODO: PAGINATION
     var PAGINATION = angular.element("#PAGINATION");
     $scope.setDocumentPagination = function(totalPage){
         PAGINATION.bootpag({
@@ -350,13 +393,14 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             maxVisible: 10
         });
     }
-
+    //TODO: BOOTPAGE
     PAGINATION.on("page", function(event, num){
         //alert(num);
         $scope.filter.page = num;
         $scope.getDocumentByPopular();
     });
 
+    //TODO: GET RECOMMENDATION DOCUMENTS
     $scope.getDocumentByRecommended=function(){
         $scope.showRecomment=true;
         $scope.showNewPost=false;
@@ -376,7 +420,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         });
     }
 
-
+    //TODO: PAGINATION FOR RECOMMENDATION DOCUMENTS
     var PAGINATION = angular.element("#PAGINATION");
     $scope.setDocumentByRecommentPagination = function(totalPage){
         PAGINATION.bootpag({
@@ -398,7 +442,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         $scope.getDocumentByRecommended();
     });
 
-
+    //TODO: GET RECENT POSTED DOCUMENTS
     $scope.getDocumentByNewPost=function(){
         $scope.showRecomment=false;
         $scope.showNewPost=true;
@@ -445,6 +489,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
 	/* Get Document and Category and User */
+	//TODO: GET DOCUMENT, CATEGORY, USER AND COMMENTS
     $scope.getDocumentAndCategoryAndUserAndCommentByDocID = function(DocID){
         fbThumbnail = DocID;
         $http({
@@ -459,12 +504,13 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             $rootScope.currentSubCategory=response.data.DATA[0].CAT_ID;
             $scope.currentDocumentID=DocID;
 
-            $scope.getAllCommentByDocID(DocID);
+
             $scope.getAllDocumentByCatID($rootScope.currentSubCategory);
             console.log("CatID: " + $rootScope.currentSubCategory);
             $scope.getAllDocumentByCatIDAndUserID($rootScope.currentSubCategory, $scope.docDetail[0].USERS.USER_ID);
+            $scope.getAllCommentByDocID(DocID);
         }, function(response){
-
+            // console.log("response",response)
         });
     }
 
@@ -504,7 +550,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         $(el).siblings('ul').slideToggle();
     }
 
-    ///
+    //TODO: GET ALL DOCUMENTS BASED ON CATEGORY ID
     $scope.getAllDocumentByCatID=function(CatID){
 
         $rootScope.currentSubCategory=CatID;		//First It is close!!
@@ -552,6 +598,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
     }
 
+    //TODO: GET ALL DOCUMENT BASED ON CATEGORY ID AND USER ID
     $scope.getAllDocumentByCatIDAndUserID = function(CatID, UserID){
         //console.log("UserId: " + UserID);
         $rootScope.currentSubCategory=CatID;		//First It is close!!
@@ -675,7 +722,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         });
 
     }
-
+    //TODO: DELETE DOCUMENT BASED ON DOCUMENT ID
     $scope.deleteDocument=function(docID){
         var typeDoc = $("#typeDoc").val();
 
@@ -708,6 +755,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             });
 
     }
+    //TODO: COUNT NUMBER OF VIEW ON DOCUMENT
     $scope.countView = function(docID){
 
         Des = "View Document";
@@ -723,18 +771,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         });
     }
 
-	/*$scope.CountDocByCatID = function(catID) {
-	 //alert(catID);
-	 $http({
-	 url : API_ACCESS_CONTROLLER_URL + '/getDocumentCountByCatID/'+catID,
-	 method : 'GET'
-	 }).then(function(response) {
-	 $scope.docCount = response.data.COUNT;
-	 console.log($scope.docCount);
-	 }, function(response) {
 
-	 });
-	 }*/
 
     $scope.updateTotalDocByCatID = function(catID) {
         //alert(catID);
@@ -842,7 +879,10 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
     ///////////////////		END DOCUMENT BLOCK	/////////////////
 
     ///////////////////		START FEEDBACK BLOCK	/////////////////
+
+//TODO: FEEDBACK BLOCK
     $scope.feeback_text="";
+    //TODO: SAVE FEEDBACK
     $scope.saveFeedBack = function(){
         $http({
             url:API_ACCESS_CONTROLLER_URL + '/feedback',
@@ -872,8 +912,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
     ///////////////////		END FEEDBACK BLOCK	/////////////////
 
     ///////////////////		START LOG BLOCK	/////////////////
-
-
+//TODO: LOG BLOCK
+    //TODO: TRACK LOG
     $scope.trackLog=function(docID ,Des,status){
 
         if($rootScope.userID ==null || $rootScope.userID=="" ||$rootScope.userID ==0 ){
@@ -899,7 +939,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
     }
 
-
+    //TODO: DELETE LOG
     $scope.deleteLog =function(docID){
         swal({   title: "តើអ្នកពិតជាចង់លុបមែនទេ?",
                 text: "អ្នកនឹងមិនអាចហៅវាមកវិញបានទេ!",
@@ -925,7 +965,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
                 }
             });
     }
-
+    //TODO: GET LOG BASED ON USER ID
     $scope.getLogByUserID =function(){
         $http({
             url:API_ACCESS_CONTROLLER_URL + '/user/log/'+$rootScope.userID,
@@ -937,7 +977,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
         });
     }
-
+    //TODO: DELETE ALL LOG BASE ON USER ID
     $scope.deleteAllLogByUserID =function(){
         swal({   title: "តើអ្នកពិតជាចង់លុបមែនទេ?",
                 text: "អ្នកនឹងមិនអាចហៅវាមកវិញបានទេ!",
@@ -974,8 +1014,9 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
 
+//TODO: REPORT BLOCK
 
-
+    //TODO: INSERT REPORT
     $scope.insertReport = function(){
         if($rootScope.UserID==0 || $rootScope.UserID==null ||$rootScope.UserID =="")
         {
@@ -1017,10 +1058,11 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
     ///////////////////		START SAVELIST BLOCK	/////////////////
-
+//TODO: SAVE LIST BLOCK
     // create saveList
     $scope.showNew = true;
     $scope.showSave = false;
+    //TODO: CHECK SAVELIST BY NAME
     $scope.checkSavelist = function(listname){
 
         if (listname != 'undefined' || listname != '')
@@ -1746,17 +1788,17 @@ app.filter('strLimit', ['$filter', function($filter) {
 
 
 app.directive('myEnter', function () {
-    return function (scope, element, attrs) {
-        element.bind("keydown keypress", function (event) {
-            if(event.which === 13) {
-                scope.$apply(function (){
-                    scope.$eval(attrs.myEnter);
-                });
-
-                event.preventDefault();
-            }
-        });
-    };
+    // return function (scope, element, attrs) {
+    //     element.bind("keydown keypress", function (event) {
+    //         if(event.which === 13) {
+    //             scope.$apply(function (){
+    //                 scope.$eval(attrs.myEnter);
+    //             });
+    //
+    //             event.preventDefault();
+    //         }
+    //     });
+    // };
 });
 
 // WHEN IMAGE LOAD ERROR
