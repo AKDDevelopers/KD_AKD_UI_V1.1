@@ -38,8 +38,8 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 			method:'GET'
 		}).then(function(response){
 			$scope.allCategoryByLevel=response.data.DATA;
-			console.log("all cat by level");
-			console.log($scope.allCategoryByLevel);
+			//console.log("all cat by level");
+			//console.log($scope.allCategoryByLevel);
 
 		}, function(response){
 
@@ -54,7 +54,7 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 			method : 'GET'
 		}).then(function(response) {
 			$scope.CategoryCount = response.data.COUNT;
-			console.log($scope.CategoryCount);
+			//console.log($scope.CategoryCount);
 		}, function(response) {
 
 		});
@@ -68,7 +68,7 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 			method:'GET',
 			params : $scope.filter
 		}).then(function(response){
-			console.log(response.data.DATA);
+			//console.log(response.data.DATA);
 			$scope.category=response.data.DATA;
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
 			//console.log("ALL Cat in admin"+$scope.category);
@@ -217,7 +217,7 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 		$(".upload_waiting").show();
 		//event.preventDefault();
 		var frmData = new FormData();
-		console.log("FILE"+$scope.myfile);
+		//console.log("FILE"+$scope.myfile);
 		frmData.append("cateId", $scope.ParentID);
 		frmData.append("files",$scope.myfile);
 
@@ -233,7 +233,7 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 		}).then(function(response) {
 
 			$(".upload_waiting").hide();
-			console.log(response.data.DATA);
+			//console.log(response.data.DATA);
 			$scope.uploadFolder(response.data.DATA);
 
 			swal(
@@ -245,7 +245,7 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 
 		}, function(response) {
 			$(".upload_waiting").hide();
-			console.log("RESPONSE ERROR"+response);
+			//console.log("RESPONSE ERROR"+response);
 			swal(
 				  'Sorry!',
 				  'Folder create Fail!',
@@ -285,7 +285,7 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 
 		frmData.append("catNumOrder", $scope.catNumOrder);
 		frmData.append("catLevel", $scope.catLevel);
-		console.log("upload folder "+path)
+		//console.log("upload folder "+path)
 		frmData.append("catImage",path);
 		$http({
 			url : API_ACCESS_CONTROLLER_URL + '/uploadFolder',
@@ -318,7 +318,7 @@ app.controller('MainCtrl', function($scope,$rootScope, $http, $sce, $timeout) {
 			$scope.sta = category.c.STATUS;*/
 		}, function(response) {
 			$(".upload_waiting").hide();
-			console.log(response);
+			//console.log(response);
 			swal(
 				  'Sorry!',
 				  'Folder create Fail!',
@@ -515,7 +515,7 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 
 		frmData.append("usreID", $rootScope.userID);
 		frmData.append("catID", $scope.catID);
-		console.log("upload calling..")
+		//console.log("upload calling..")
 		if($scope.des==""||$scope.des==null){
 			$scope.desc = "";
 		}
@@ -642,7 +642,7 @@ app.controller('DocumentCtrl', function($scope,$rootScope, $http, $sce, $timeout
 		}).then(function(response) {
 
 			$scope.document = response.data.DATA;
-
+			
 
 			if(response.data.PAGING != null){
 				$rootScope.currentTotalPage = response.data.PAGING.TOTAL_PAGES;
@@ -871,7 +871,7 @@ app.controller('CommentCtrl', function($scope, $http, $window) {
 			params : $scope.filter
 
 		}).then(function(response) {
-			console.log(response.data.DATA);
+			//console.log(response.data.DATA);
 			$scope.comment = response.data.DATA;
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
 
@@ -988,7 +988,7 @@ app.controller('SavelistCtrl', function($scope, $http, $window) {
 			params : $scope.filter
 		}).then(function(response) {
 			$scope.savelist = response.data.DATA;
-			console.log($scope.savelist);
+			//console.log($scope.savelist);
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
 		}, function(response) {
 
@@ -1097,7 +1097,7 @@ app.controller('FeedbackCtrl', function($scope, $http, $window) {
 			params : $scope.filter
 		}).then(function(response) {
 			$scope.feedback = response.data.DATA;
-			console.log($scope.feedback);
+			//console.log($scope.feedback);
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
 		}, function(response) {
 
@@ -1176,7 +1176,7 @@ app.controller('ReportCtrl', function($scope, $http, $window) {
 			params : $scope.filter
 		}).then(function(response) {
 			$scope.report = response.data.DATA;
-			console.log($scope.report);
+			//console.log($scope.report);
 			$scope.setPagination(response.data.PAGING.TOTAL_PAGES);
 		}, function(response) {
 

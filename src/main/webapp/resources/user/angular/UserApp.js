@@ -12,7 +12,7 @@ var API_PATH = "http://docs-api.khmeracademy.org";
 var UI_PATH = "http://docs.khmeracademy.org";
 var API_SOCKET_URL = 'http://docs-api.khmeracademy.org:11225'
 
-
+ 
 
 //TODO: INITIALIZED USER CONTROLLER APP
 app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$window', function($scope,$rootScope,$http,$location,$sce,$window){	//$rootScope, $scope, $http, $location, $localStorage, loginService
@@ -59,7 +59,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
 
-    //TODO: SEARCH BLOCK
+  //TODO: SEARCH BLOCK
     var _selected;
     $scope.selected = undefined;
 
@@ -103,8 +103,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         }).then(function(response){
 
             $scope.documentSearch=response.data.DATA;
-            console.log("respone search.");
-            console.log(response);
+            //console.log("respone search.");
+            //console.log(response);
 
             if(response.data.DATA==null){
                 $scope.recordNotFound=true;
@@ -120,7 +120,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
 
-    // TODO: CATEGORY BLOCK
+ // TODO: CATEGORY BLOCK
 
     //TODO: GET ALL CATEGORY
 
@@ -133,8 +133,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
                 $scope.category=response.data.DATA;
 
-                console.log("Get All Category Test");
-                console.log($scope.category);
+                //console.log("Get All Category Test");
+                //console.log($scope.category);
 
             }, function(response){
 
@@ -151,8 +151,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             method:'GET'
         }).then(function(response){
             $scope.parentCategory=response.data.DATA;
-            console.log("parentcat[0]");
-            console.log($scope.parentCategory[0]);
+            //console.log("parentcat[0]");
+           // console.log($scope.parentCategory[0]);
         }, function(response){
 
         });
@@ -201,10 +201,10 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         //TODO: SOCKET IO URL DECLARATION
         var url = API_SOCKET_URL
         var socketServerUrl = url
-        console.log(socketServerUrl)
+        //console.log(socketServerUrl)
         var commentNsp = socketServerUrl + '/comment'
         var socket = io.connect(commentNsp);
-        console.log("getAllCommentByDocID=> ",DocID)
+    //console.log("getAllCommentByDocID=> ",DocID)
 
 
         socket.on('connect',function(){
@@ -214,10 +214,10 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         })
 
         socket.on('all comments', function(comments){
-            console.log('comments=> ', comments)
+           // console.log('comments=> ', comments)
             $scope.commentByDoc = comments
             $scope.countComment = comments.length;
-            console.log($scope.commentByDoc)
+          //  console.log($scope.commentByDoc)
         })
 
 
@@ -232,7 +232,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
     $scope.insertComment = function(){
         var url = API_SOCKET_URL
         var socketServerUrl = url
-        console.log(socketServerUrl)
+       // console.log(socketServerUrl)
         var commentNsp = socketServerUrl + '/comment'
         var socket = io.connect(commentNsp);
 
@@ -241,7 +241,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             location.href= "/login";
         }else{
 
-            //    var commentRemark = angular.element('#commentRemark').text()
+        //    var commentRemark = angular.element('#commentRemark').text()
             var commentData = {
                 // "COMMENT_ID":$scope.commentID,
                 "CREATED_DATE": new Date(),
@@ -257,7 +257,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
             socket.on('connect',function(){
                 socket.emit('new comment', commentData,function(){
-                    console.log('onNew comment=>', commentData)
+                   // console.log('onNew comment=>', commentData)
 
                 })
             })
@@ -273,7 +273,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             //$scope.newComment = newComment
 
             // $scope.commentByDoc.unshift(newComment)
-            console.log("NEW COMMENT FROM SERVER", newComment)
+            //console.log("NEW COMMENT FROM SERVER", newComment)
 
             // newComment["USERS"]={
             //     "PROFILE":$scope.userInfoByUserID.PROFILE,
@@ -285,7 +285,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             //  console.log($scope.commentByDoc)
 
         })
-        console.log(commentData)
+        //console.log(commentData)
         $scope.commentByDoc.unshift(commentData)
         $scope.newComment = ""
 
@@ -296,11 +296,11 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
     $scope.deleteComment = function(){
         var url = API_SOCKET_URL
         var socketServerUrl = url
-        console.log(socketServerUrl)
+        //console.log(socketServerUrl)
         var commentNsp = socketServerUrl + '/comment'
         var socket = io.connect(commentNsp);
         $scope.commentID = angular.element('.commentBox').attr("id")
-        console.log("comment id", $scope.commentID)
+        //console.log("comment id", $scope.commentID)
 
         if($rootScope.UserID==0 || $rootScope.UserID==null ||$rootScope.UserID =="")
         {
@@ -316,7 +316,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
             socket.emit('remove comment',commentData,function(){
-                console.log('comment to be removed=> ', commentData)
+                //console.log('comment to be removed=> ', commentData)
                 angular.element("#listCommentBox").first().remove()
                 // $scope.countComment = commentData.length;
 
@@ -324,16 +324,16 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             })
 
             socket.on('removed comment',function(commentId){
-                console.log("Removed comment")
+                //console.log("Removed comment")
                 // $scope.getAllCommentByDocID($scope.docID)
                 // $scope.commentByDoc.shift(commentData)
-                //  angular.element("#listCommentBox").first().remove()
-                //   angular.element(".listCommentBox").first().remove();
+              //  angular.element("#listCommentBox").first().remove()
+             //   angular.element(".listCommentBox").first().remove();
                 socket.on('all comments', function(comments){
-                    console.log('comments=> ', comments)
+                    //console.log('comments=> ', comments)
                     $scope.commentByDoc = comments
                     $scope.countComment = comments.length;
-                    console.log($scope.commentByDoc)
+                    //console.log($scope.commentByDoc)
                 })
 
 
@@ -488,8 +488,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
     });
 
 
-    /* Get Document and Category and User */
-    //TODO: GET DOCUMENT, CATEGORY, USER AND COMMENTS
+	/* Get Document and Category and User */
+	//TODO: GET DOCUMENT, CATEGORY, USER AND COMMENTS
     $scope.getDocumentAndCategoryAndUserAndCommentByDocID = function(DocID){
         fbThumbnail = DocID;
         $http({
@@ -499,14 +499,14 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             $scope.docDetail=response.data.DATA;
 
             //console.log($scope.docDetail[0].USERS.USER_ID);
-            console.log("DOC DETAIL",$scope.docDetail);
+            //console.log("DOC DETAIL",$scope.docDetail);
             $scope.commentByDocID=response.data.DATA[0].COMMENT;
             $rootScope.currentSubCategory=response.data.DATA[0].CAT_ID;
             $scope.currentDocumentID=DocID;
 
 
             $scope.getAllDocumentByCatID($rootScope.currentSubCategory);
-            console.log("CatID: " + $rootScope.currentSubCategory);
+            //console.log("CatID: " + $rootScope.currentSubCategory);
             $scope.getAllDocumentByCatIDAndUserID($rootScope.currentSubCategory, $scope.docDetail[0].USERS.USER_ID);
             $scope.getAllCommentByDocID(DocID);
         }, function(response){
@@ -573,7 +573,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
             if(response.data.DATA==null && $scope.currentTotalDoc!=0){
                 $scope.filter.page=1;
-                /*$scope.getAllDocumentByCatID(CatID);*/	// JUST DISABLE IT ON 05/12/2016 BUT NOT CHECK 100%. MEAN WE CAN OPEN IT.
+				/*$scope.getAllDocumentByCatID(CatID);*/	// JUST DISABLE IT ON 05/12/2016 BUT NOT CHECK 100%. MEAN WE CAN OPEN IT.
 
 
             }
@@ -621,7 +621,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
             if(response.data.DATA==null && $scope.currentTotalDoc!=0){
                 $scope.filter.page=1;
-                /*$scope.getAllDocumentByCatID(CatID);*/	// JUST DISABLE IT ON 05/12/2016 BUT NOT CHECK 100%. MEAN WE CAN OPEN IT.
+				/*$scope.getAllDocumentByCatID(CatID);*/	// JUST DISABLE IT ON 05/12/2016 BUT NOT CHECK 100%. MEAN WE CAN OPEN IT.
 
 
             }
@@ -647,7 +647,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
     }
 
 
-    /*	START NEW CODE TO SET PAGINATION	*/
+	/*	START NEW CODE TO SET PAGINATION	*/
 
     var PAGINATION = angular.element("#PAGINATION_DOC_BY_CAT");
 
@@ -683,7 +683,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
 
-    /*	STOP NEW CODE TO SET PAGINATION	*/
+	/*	STOP NEW CODE TO SET PAGINATION	*/
 
     $scope.getDocumentById=function(docID){
 
@@ -779,8 +779,8 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             url : API_ACCESS_CONTROLLER_URL + '/document/updateTotalDocByCatID/'+catID,
             method : 'PUT'
         }).then(function(response) {
-            /*$scope.docUpdateByCatID = response.data.MESSAGE;
-             console.log($scope.docUpdateByCatID);*/
+			/*$scope.docUpdateByCatID = response.data.MESSAGE;
+			 console.log($scope.docUpdateByCatID);*/
         }, function(response) {
 
         });
@@ -904,7 +904,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
 
         }, function(response){
-            console.log(response);
+            //console.log(response);
         });
     }
 
@@ -1163,34 +1163,34 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
 
         }else{
 
-            /*Savelistname = listname;
+			/*Savelistname = listname;
 
-             Des = "Create Category Savelist";
-             $http({
-             url:API_ACCESS_CONTROLLER_URL + '/saveSavelistOnly',
-             method:'POST',
-             data:{
-             'CREATED_DATE': new Date(),
-             'LIST_NAME': Savelistname,
-             'REMARK': Des,
-             'STATUS':1 ,
-             'USER_ID': $rootScope.userID
+			 Des = "Create Category Savelist";
+			 $http({
+			 url:API_ACCESS_CONTROLLER_URL + '/saveSavelistOnly',
+			 method:'POST',
+			 data:{
+			 'CREATED_DATE': new Date(),
+			 'LIST_NAME': Savelistname,
+			 'REMARK': Des,
+			 'STATUS':1 ,
+			 'USER_ID': $rootScope.userID
 
-             }
-             }).then(function(response){
+			 }
+			 }).then(function(response){
 
-             $scope.trackLog(docID,Des,status)
-             $scope.saveListname="";
-             swal({
-             title: "ជោកជ័យ!",
-             text: "ឯកសាររបស់អ្នកត្រូវបានបញ្ចូលទៅក្នុងបញ្ជី!",
-             timer: 800,
-             showConfirmButton: false
-             });
-             $scope.enableList=false;
-             }, function(response){
+			 $scope.trackLog(docID,Des,status)
+			 $scope.saveListname="";
+			 swal({
+			 title: "ជោកជ័យ!",
+			 text: "ឯកសាររបស់អ្នកត្រូវបានបញ្ចូលទៅក្នុងបញ្ជី!",
+			 timer: 800,
+			 showConfirmButton: false
+			 });
+			 $scope.enableList=false;
+			 }, function(response){
 
-             });*/
+			 });*/
 
 
         }
@@ -1297,7 +1297,7 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
                         url:API_ACCESS_CONTROLLER_URL + '/savelist/'+listID,
                         method:'DELETE',
                     }).then(function(response){
-                        /*$scope.callActiveTab('mydoc');*/
+						/*$scope.callActiveTab('mydoc');*/
                         $('.nav-tabs a[href="#infor"]').tab('show');
                         swal("បានជោគជ័យ!", "បញ្ជីរត្រូវបានលុប", "success");
                         $scope.getSavelistMenuUser();
@@ -1363,15 +1363,15 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         });
     }
     //-----------getSavelistMenuUser---------------//
-    /*$scope.saveListIDByUser="";
-     $scope.saveListNameByUser="";
-     $scope.totalInSaveListByUser="";*/
+	/*$scope.saveListIDByUser="";
+	 $scope.saveListNameByUser="";
+	 $scope.totalInSaveListByUser="";*/
 
     $scope.getDocumentByEachSavelist=function(savelistID){
 
-        /*$scope.saveListIDByUser=savelistID;
-         $scope.saveListNameByUser=listName;
-         $scope.totalInSaveListByUser=totalDoc;*/
+		/*$scope.saveListIDByUser=savelistID;
+		 $scope.saveListNameByUser=listName;
+		 $scope.totalInSaveListByUser=totalDoc;*/
 
         var userID = $rootScope.userID;
         $http({
@@ -1546,118 +1546,92 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             var files = event.target.files;
             var frmData = new FormData();
             var file = $('#singleUploadDocument')[0].files[0];
+            
 
-
-
+           
 
             frmData.append("files", file);
-
-
+            
+            
             frmData.append("title", $scope.theFile.name);
             if($scope.des==""||$scope.des==null){
                 $scope.des = "";
             }
 
-            console.log("CHECK DUPLICATE=> ",$scope.checkDuplicate($scope.userID,$scope.title))
+        
 
-
-            console.log("false")
-            frmData.append("des", $scope.des);
-            frmData.append("usreID", $rootScope.userID);
-            frmData.append("catID", $scope.catID);
-            $http({
+            
+              
+                frmData.append("des", $scope.des);
+                frmData.append("usreID", $rootScope.userID);
+                 frmData.append("catID", $scope.catID);
+             $http({
                 url:API_ACCESS_CONTROLLER_URL +'/document/user/'+$rootScope.userID+'?docTypeNum=1',
                 method:'GET'
             }).then(function(response){
-                // console.log(API_ACCESS_CONTROLLER_URL +'/document/user/'+$rootScope.userID+'?docTypeNum=1')
-                console.log("Get document response=>> ", response);
+               // console.log(API_ACCESS_CONTROLLER_URL +'/document/user/'+$rootScope.userID+'?docTypeNum=1')
+             //   console.log("Get document response=>> ", response);
                 for(var i in response.data.DATA){
                     if(response.data.DATA[i].TITLE == $scope.theFile.name){
-                        alert("your file is duplicate!")
+                       
 
-                        $(".upload_waiting").hide();
+                         $(".upload_waiting").hide();
 
-                        swal(
-                            'សូមព្យាយាមម្តងទៀត!',
-                            'ឯកសាររបស់អ្នកធ្លាប់បានបញ្ចូលម្ដងហើយ',
-                            'success'
-                        )
+                            swal(
+                                'សូមព្យាយាមម្តងទៀត!',
+                                'ឯកសាររបស់អ្នកធ្លាប់បានបញ្ចូលម្ដងហើយ',
+                                'warning'
+                            )
                         return;
 
                     }
-
+                    
                 }
-                $http({
-                    url : API_ACCESS_CONTROLLER_URL + '/uploadDocument',
-                    method :'POST',
-                    data : frmData,
-                    transformRequest : angular.identity,
-                    headers : {
-                        'Content-Type' : undefined
-                    }
-                }).then(function(response) {
-                    $(".upload_waiting").hide();
+             $http({
+                            url : API_ACCESS_CONTROLLER_URL + '/uploadDocument',
+                            method :'POST',
+                            data : frmData,
+                            transformRequest : angular.identity,
+                            headers : {
+                                'Content-Type' : undefined
+                            }
+            }).then(function(response) {
+                $(".upload_waiting").hide();
 
-                    swal(
-                        'អបអរសាទរ!',
-                        'ឯកសាររបស់អ្នកត្រូវបានចែកចាយបានសម្រេច!',
-                        'success'
-                    )
+                swal(
+                    'អបអរសាទរ!',
+                    'ឯកសាររបស់អ្នកត្រូវបានចែកចាយបានសម្រេច!',
+                    'success'
+                )
 
-                    $scope.getAllDocumentByCatID($rootScope.currentSubCategory);
-                }, function(response) {
-                    $(".upload_waiting").hide();
+                $scope.getAllDocumentByCatID($rootScope.currentSubCategory);
+            }, function(response) {
+                $(".upload_waiting").hide();
 
-                    swal(
-                        'សូមសោកស្តាយ!',
-                        'ឯកសារចែកចាយមិនបានសម្រេច!\nសូមព្យាយាមម្តងទៀត',
-                        'error'
-                    )
-                });
+                swal(
+                    'សូមសោកស្តាយ!',
+                    'ឯកសារចែកចាយមិនបានសម្រេច!\nសូមព្យាយាមម្តងទៀត',
+                    'error'
+                )
+            });
 
 
 
 
 
             }, function(response){
-                console.log("RESPONSE DUPLICATE ",response)
-            });
+            //    console.log("RESPONSE DUPLICATE ",response)
+            });     
 
 
-
-        }
-
-
-
-    };
-
-    $scope.checkDuplicate = function(userId, fileName){
-//  /api/v1/document/user/35?docTypeNum=2
-        // TODO: retrive user document
-        $scope.result = "";
-        $http({
-            url:API_ACCESS_CONTROLLER_URL +'/document/user/'+$rootScope.userID+'?docTypeNum=1',
-            method:'GET'
-        }).then(function(response){
-            // console.log(API_ACCESS_CONTROLLER_URL +'/document/user/'+$rootScope.userID+'?docTypeNum=1')
-            console.log("Get document response=>> ", response);
-            for(var i in response.data.DATA){
-                // if(response.data.DATA[i].TITLE == fileName){
-                //     alert("your file is duplicate!")
-                //     return;
-
-                // }
-                $scope.result = response
+           
             }
 
-        }, function(response){
-            console.log("RESPONSE DUPLICATE ",response)
-        });
-        console.log("RESULT=> ",$scope.result)
-        return  $scope.result
+        
+        
+    };
 
 
-    }
 
     $scope.uploadUserProfile = function(event) {
         if(!$scope.checkUserLogin()){
@@ -1735,45 +1709,45 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
         });
     };
 
-    /*
-     // SHARE TO FACEBOOK
-     <div id="fb-root"></div>
-     <script>(function(d, s, id) {
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) return;
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/km_KH/sdk.js#xfbml=1&version=v2.7&appId=776306919082812";
-     fjs.parentNode.insertBefore(js, fjs);
-     }(document, 'script', 'facebook-jssdk'));</script>
+/*
+    // SHARE TO FACEBOOK
+    <div id="fb-root"></div>
+        <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/km_KH/sdk.js#xfbml=1&version=v2.7&appId=776306919082812";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
 
 
-     <!-- Your share button code -->
-     <div id="share_button"> Share </div>
+    <!-- Your share button code -->
+    <div id="share_button"> Share </div>
 
-     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
-     <script type="text/javascript">
-     $(document).ready(function(){
-     $('#share_button').click(function(e){
-     e.preventDefault();
-     FB.ui(
-     {
-     method: 'feed',
-     name: 'Testing',
-     link: 'http://www.khmeracademy.org/',
-     picture: 'http://www.khmeracademy.org/resources/assets/img/banner/4th.jpg',
-     caption: 'Test',
-     description: 'Test',
-     message: 'Test'
-     });
-     });
-     });
-     </script>
-     */
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        $(document).ready(function(){
+            $('#share_button').click(function(e){
+                e.preventDefault();
+                FB.ui(
+                    {
+                        method: 'feed',
+                        name: 'Testing',
+                        link: 'http://www.khmeracademy.org/',
+                        picture: 'http://www.khmeracademy.org/resources/assets/img/banner/4th.jpg',
+                        caption: 'Test',
+                        description: 'Test',
+                        message: 'Test'
+                    });
+            });
+        });
+    </script>
+        */
 
 
     $scope.FBShare = function(docID,thumbnail,title,desc) {
         var url = UI_PATH + '/' + window.location.pathname;
-        console.log(url);
+        //console.log(url);
         var description = desc==undefined?desc:"No description"
         FB.ui({
             method: 'feed',
@@ -1786,15 +1760,15 @@ app.controller('UserCtrl',['$scope','$rootScope','$http','$location','$sce', '$w
             description:description
         }, function(response){
             if (response && !response.error_code) {
-                /*status = 'success';
-                 $.event.trigger('fb-share.success');
-                 alert("success");*/
+				/*status = 'success';
+				 $.event.trigger('fb-share.success');
+				 alert("success");*/
                 $scope.updateTotalShare(docID);
 
             } else {
-                /*status = 'error';
-                 $.event.trigger('fb-share.error');
-                 alert("fail");*/
+				/*status = 'error';
+				 $.event.trigger('fb-share.error');
+				 alert("fail");*/
             }
         });
     };

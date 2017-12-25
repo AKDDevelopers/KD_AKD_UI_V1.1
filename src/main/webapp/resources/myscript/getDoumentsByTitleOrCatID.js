@@ -1,15 +1,4 @@
-/*CONSTANT*/
-var API_ACCESS_CONTROLLER_URL = "http://localhost:1111/api/v1";
-// var API_PATH = "http://localhost:1111";
-// var UI_PATH = "http://192.168.178.202:2222";
-//
-// var API_ACCESS_CONTROLLER_URL = "http://docs-api.khmeracademy.org/api/v1";
-var API_PATH = "http://docs-api.khmeracademy.org";
-var UI_PATH = "http://docs.khmeracademy.org";
-
-//
-
-var getCurrentPage = 1;
+	var getCurrentPage = 1;
 	var totalPage = 0;
 	
 	var catID 		= "";
@@ -18,7 +7,7 @@ var getCurrentPage = 1;
 	var page 		= 1; 
 	var limit 		= 12;
 
-	console.log(keyword);
+	//console.log(keyword);
 
     if(keyword != null || keyword  != ""){
         docTitle = keyword;
@@ -30,15 +19,14 @@ var getCurrentPage = 1;
 	}
 	
 	$(document).ready(function() {
-    // localhost:1111
-		// http://docs-api.khmeracademy.org/api/v1/get-categories
+    
 		showMainPageData = function(){ 
     		$.ajax({
-    			url :API_ACCESS_CONTROLLER_URL +"/get-categories",
+    			url :"http://docs-api.khmeracademy.org/api/v1/get-categories",
 				method: 'GET',
 				success:function(data){
-					console.log(data);
-
+					//console.log(data);
+					
 					if(data.DATA != null){
 						displayCategory(data);					
 					}
@@ -48,12 +36,12 @@ var getCurrentPage = 1;
     	};
     	
     	getDocumentsByDocTitleOrCatID = function(catID , docTitle , page,  limit){
-    		console.log("Title : " + docTitle);
+    		//console.log("Title : " + docTitle);
     		$.ajax({
-    			url :API_ACCESS_CONTROLLER_URL +"/get-documents-by-doc-title-or-cat-id?cat-id="+catID+"&doc-title="+docTitle+"&page="+page+"&limit="+limit,
+    			url :"http://docs-api.khmeracademy.org/api/v1/get-documents-by-doc-title-or-cat-id?cat-id="+catID+"&doc-title="+docTitle+"&page="+page+"&limit="+limit,
 				method: 'GET',
 				success:function(data){
-					console.log(data);
+					//console.log(data);
 					if(data.DATA.length > 0 ){
 						$("#oopSearch").hide();
 						//$("#getDocuments").empty();
